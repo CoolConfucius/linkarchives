@@ -1,0 +1,25 @@
+<div class="container" ng-controller = "dashboardController">
+  <h1>Welcome, {{loggedinuser.name}}!</h1>
+  <form name="productForm">
+    <input type="text" name='name' placeholder="Title" ng-model="newitem.title" ng-minlength="1" required>
+    <input type="text" name='description' placeholder="Description" ng-model="newitem.description" ng-minlength="1">
+    <select ng-model="newitem.taguser">
+      <option ng-repeat="user in users track by $index" value="{{user.name}}">{{user.name}}</option>
+    </select>
+    
+    <button class="btn btn-primary" ng-click="additem()" ng-disabled="productForm.name.$invalid">Add to List</button>
+  </form>
+  <br><br><br>
+  <p>Before I die I want to..</p>
+  <div class="container">
+    <div class="row" ng-repeat="item in items">
+        <input type="checkbox" ng-disabled="(item.taguser !== loggedinuser.name)" ng-model="newObject[item._id]" ng-change="toggle(item._id)">
+        <span>{{item.taguser}} | {{item.title}} - {{item.description}} - {{item.createdAt}}</span>
+    </div>
+  </div>
+  <br>
+  <p>List of other users (Click to view profile):</p>
+  <p ng-repeat="user in users track by $index">
+    <a ng-href="/#!/user/{{user.name}}" value="{{user.name}}" ng-bind="user.name"></a>
+  </p>
+</div>

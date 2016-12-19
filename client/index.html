@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Awesome</title>
+  <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+
+  <script src="angular/angular.js" charset="utf-8"></script>
+  <script src="angular-route/angular-route.js" charset="utf-8"></script>
+  <script src="jquery/dist/jquery.min.js" charset="utf-8"></script>
+  <script src="bootstrap/dist/js/bootstrap.min.js" charset="utf-8"></script>
+  
+  <script src="assets/app.js" charset="utf-8"></script>
+
+  <script src="assets/factories/masterFactory.js" charset="utf-8"></script>
+
+  <script src="assets/controllers/masterController.js" charset="utf-8"></script>
+  
+  <style>
+    .nav a{
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav container" ng-app="app" ng-controller="navController">
+    <!-- {{currentuser}} -->
+    <a ng-href="#!/user/{{username}}">Bucket List</a> | <a href="#!/dashboard">Home</a> | <a ng-click="logout()">Logout</a> 
+    <!-- | <a href="#!/customers">Home</a> -->
+    <br><br>
+    <div ng-view=""></div>
+    <!-- <div class="btn btn-success">bootstraptest</div> -->
+  </div>
+</body>
+</html>
