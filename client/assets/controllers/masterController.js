@@ -1,25 +1,35 @@
-console.log("masterController");
+console.log("masterCtrl");
 
 var app = angular.module('app');
 
-app.controller('navController', ['$scope', '$location', 'usersFactory', function($scope, $location, usersFactory){
-  console.log("navController");
-  $scope.currentuser = {};
+app.controller('navCtrl', ['$scope', '$location', 'usersFactory', function($scope, $location, usersFactory){
+  console.log("navCtrl");
+  // $scope.loguser = {};
+  $scope.loguser = {
+    name: "Ben"
+  };
 
   $scope.logout = function(){
     console.log("Logging out");
-    usersFactory.logout(function(){
-      console.log("Logged out!");
+    if ($scope.loguser) {
+      $scope.loguser = null;   
+    } else {
+      $scope.loguser = { name: 'Ben' };
+    }
+    
+
+    // usersFactory.logout(function(){
+    //   console.log("Logged out!");
 
       // alert("logged out!");
-      $location.url('/');
-    })
+      // $location.url('/');
+    // })
   }
 }])
 
 
-app.controller('enterController', ['$scope', '$location', 'usersFactory', function($scope, $location, usersFactory){
-  console.log("enterController");
+app.controller('registerCtrl', ['$scope', '$location', 'usersFactory', function($scope, $location, usersFactory){
+  console.log("registerCtrl");
   $scope.username = '';
 
   $scope.login = function(){
@@ -45,45 +55,66 @@ app.controller('enterController', ['$scope', '$location', 'usersFactory', functi
 
 }])
 
-app.controller('dashboardController', ['$scope', '$location', 'usersFactory', 'itemsFactory', function($scope, $location, usersFactory, itemsFactory){
-  console.log("dashboardController");
-  $scope.loggedinuser = {}; 
+app.controller('homeCtrl', ['$scope', '$location', 'usersFactory', 'itemsFactory', function($scope, $location, usersFactory, itemsFactory){
+  console.log("homeCtrl");
+  $scope.collectionform = true; 
+  $scope.loguser = {}; 
   $scope.users = [];
   $scope.items = [];
   $scope.newitem = {};
 
-  usersFactory.getUser(function(data){
-    $scope.loggedinuser = data; 
-    $scope.newitem.user = data.name; 
-  })
-  usersFactory.getUsers(function(data){
-    if (data.length) {
-      $scope.users = data; 
-    } else {
-      usersFactory.index(function(data){
-        $scope.users = data; 
-      })
-    }
-  })
+  $scope.togglecollectionform = function(){
+    $scope.collectionform = !$scope.collectionform; 
+  }
 
-  itemsFactory.getItems(function(data){
-    if (data.length) {
-      $scope.items = data; 
-    } else {
-      itemsFactory.index(function(data){
-        $scope.items = data; 
-      })
-    }
-  })
+  // function gotoRegister(){
+  //   if (!$scope.loguser) {
+  //     alert("Register to add a collection!");
+  //     $location.url('/register');
+  //   };
+  // }
+
+  $scope.addcollection = function(){
+    
+    // console.log($scope.newitem.taguser);
+    // if (!$scope.newitem.taguser) $scope.newitem.taguser = $scope.loggedinuser.name;
+    // console.log("create new item in homeCtrl!", $scope.newitem);
+    // itemsFactory.create($scope.newitem, function(data){
+    //   console.log("returned item: ", data);
+    // })
+  }
+
+  // usersFactory.getUser(function(data){
+  //   $scope.loggedinuser = data; 
+  //   $scope.newitem.user = data.name; 
+  // })
+  // usersFactory.getUsers(function(data){
+  //   if (data.length) {
+  //     $scope.users = data; 
+  //   } else {
+  //     usersFactory.index(function(data){
+  //       $scope.users = data; 
+  //     })
+  //   }
+  // })
+
+  // itemsFactory.getItems(function(data){
+  //   if (data.length) {
+  //     $scope.items = data; 
+  //   } else {
+  //     itemsFactory.index(function(data){
+  //       $scope.items = data; 
+  //     })
+  //   }
+  // })
 
   $scope.additem = function(){
     console.log($scope.newitem.taguser);
     if (!$scope.newitem.taguser) $scope.newitem.taguser = $scope.loggedinuser.name;
-    console.log("create new item in dashboardController!", $scope.newitem);
+    console.log("create new item in homeCtrl!", $scope.newitem);
     itemsFactory.create($scope.newitem, function(data){
       console.log("returned item: ", data);
     })
-
   }
 
   console.log($scope.users);
@@ -98,8 +129,8 @@ app.controller('dashboardController', ['$scope', '$location', 'usersFactory', 'i
 
 }])
 
-app.controller('profileController', ['$scope', '$location', '$routeParams', 'usersFactory', 'itemsFactory', function($scope, $location, $routeParams, usersFactory, itemsFactory){
-  console.log("profileController", $routeParams);
+app.controller('profileCtrl', ['$scope', '$location', '$routeParams', 'usersFactory', 'itemsFactory', function($scope, $location, $routeParams, usersFactory, itemsFactory){
+  console.log("profileCtrl", $routeParams);
   $scope.sameuser = false; 
   $scope.loggedinuser = {}; 
   $scope.profileuser = {}; 
@@ -140,8 +171,8 @@ app.controller('profileController', ['$scope', '$location', '$routeParams', 'use
 
 
 
-app.controller('customersController', ['$scope', '$location', 'customersFactory', function($scope, $location, customersFactory){
-  console.log("customersController");
+app.controller('customersCtrl', ['$scope', '$location', 'customersFactory', function($scope, $location, customersFactory){
+  console.log("customersCtrl");
   $scope.newcustomer = {};
   $scope.customers = [];
 
@@ -168,8 +199,8 @@ app.controller('customersController', ['$scope', '$location', 'customersFactory'
 }])
 
 
-app.controller('productsController', ['$scope', '$location', 'productsFactory', function($scope, $location, productsFactory){
-  console.log("productsController");
+app.controller('productsCtrl', ['$scope', '$location', 'productsFactory', function($scope, $location, productsFactory){
+  console.log("productsCtrl");
   $scope.newproduct = {};
   $scope.products = [];
 
@@ -199,8 +230,8 @@ app.controller('productsController', ['$scope', '$location', 'productsFactory', 
   }
 }])
 
-app.controller('ordersController', ['$scope', '$location', 'customersFactory', 'productsFactory', 'ordersFactory', function($scope, $location, customersFactory, productsFactory, ordersFactory){
-  console.log("ordersController");
+app.controller('ordersCtrl', ['$scope', '$location', 'customersFactory', 'productsFactory', 'ordersFactory', function($scope, $location, customersFactory, productsFactory, ordersFactory){
+  console.log("ordersCtrl");
   $scope.customers = [];
   $scope.products = []; 
   customersFactory.index(function(data){
@@ -245,8 +276,8 @@ app.controller('ordersController', ['$scope', '$location', 'customersFactory', '
 
 
 
-// app.controller('dashboardController', ['$scope', '$location', 'customersFactory', 'productsFactory', 'ordersFactory', function($scope, $location, customersFactory, productsFactory, ordersFactory){
-//   console.log("dashboardController");
+// app.controller('homeCtrl', ['$scope', '$location', 'customersFactory', 'productsFactory', 'ordersFactory', function($scope, $location, customersFactory, productsFactory, ordersFactory){
+//   console.log("homeCtrl");
 //   $scope.customers = [];
 //   $scope.products = []; 
 //   $scope.orders = []; 

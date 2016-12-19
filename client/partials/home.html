@@ -1,0 +1,93 @@
+<!-- <h1>Home</h1> -->
+<!-- <div class="navbar-collapse collapse">
+  <form class="navbar-form navbar-left" role="search">
+    <div class="form-group">
+      <input ng-model="searchtext" type="text" class="form-control" placeholder="Search">
+    </div>
+  </form>
+</div> -->
+<div class="container" id="home">
+  <div ng-show="loguser">
+     <a class="btn btn-sm btn-primary" ng-href="#!/users/{{username}}/collections">Your Collections</a> | <a class="btn btn-sm btn-primary" ng-href="#!/users/{{username}}/links">Your Links</a> | <a class="btn btn-sm btn-primary" ng-href="#!/users/{{username}}">Profile</a>
+    <br><br>
+    <form name="linkForm">
+      <!-- <input type="url" name='url' placeholder="url" ng-model="newlink.url" ng-minlength="1" required> -->
+      <input type="text" name='url' placeholder="url" ng-model="newlink.url" ng-minlength="1" required>
+      <br>
+      <input type="text" name='title' placeholder="Title" ng-model="newlink.title">
+      <input type="text" name='description' placeholder="Description" ng-model="newlink.description">
+      <br>
+      Collection: 
+      <select ng-model="newlink.taguser">
+        <option ng-repeat="user in users track by $index" value="{{user.name}}">{{user.name}}</option>
+      </select>
+      <br>
+      <input type="text" name='tags' placeholder="tags" ng-model="newlink.tags">
+      <br>
+      <button class="btn btn-primary" ng-click="addcollection()" ng-disabled="linkForm.url.$invalid">Add Link</button>
+    </form>
+    
+
+    <hr>
+    <div class="btn btn-primary" ng-click="togglecollectionform()">Add Collection</div>
+    <form name="collectionForm" ng-show="collectionform">
+      <input type="text" name='name' placeholder="Name" ng-model="newcollection.title" ng-minlength="1" required>
+      <input type="text" name='description' placeholder="Description" ng-model="newcollection.description" ng-minlength="1">
+      <button class="btn btn-primary" ng-click="addcollection()" ng-disabled="collectionForm.name.$invalid">Enter</button>
+    </form>
+    <hr>
+  </div>
+  
+  <p>Featured Links</p>
+
+  <!-- <div class="row controls-row">
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="sort-by" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Sort By
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="sort-by">
+        <li><a ng-click="sort('-recent')">Last Updated</a></li>
+        <li><a ng-click="sort('-startdate')">Start Date (New - Old)</a></li>
+        <li><a ng-click="sort('startdate')">Start Date (Old - New)</a></li>
+        <li><a ng-click="sort('-snippets.length')">Number of Snippets (Most - Least)</a></li>
+        <li><a ng-click="sort('snippets.length')">Number of Snippets (Least - Most)</a></li>
+        <li><a ng-click="sort('-views')">Number of Views (Most - Least)</a></li>
+        <li><a ng-click="sort('views')">Number of Views (Least - Most)</a></li>
+      </ul>
+    </div>
+
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="filter-by" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Filter
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="filter-by">
+        <li><a ng-click="filter('all')">All Stories</a></li>
+        <li><a ng-click="filter('open')">Open Stories</a></li>
+        <li><a ng-click="filter('closed')">Closed Stories</a></li>
+      </ul>
+    </div>
+
+    <a href="#/createstory" class="btn new-story-btn">New Story</a>
+  </div>
+
+  <div ng-repeat='item in stories | orderBy:sorttext | filter: searchtext track by $index' ng-if="!closedfilter || item.isclosed === filterisclosed">
+
+    <div ng-class="{closed: item.isclosed }" class="panel panel-default story-preview col-sm-8 col-sm-offset-2">
+      <div class="panel-body">
+        <p>Started by: 
+          <a ng-if="item.startedby !== 'Anonymous'" href="#/profile/{{item.startedby}}">{{item.startedby}}</a>
+          <span ng-if="item.startedby === 'Anonymous'">Anonymous</span>
+           | Started on: {{item.short}} | Most recent addition: {{item.recentlong}} by 
+            <a ng-if="item.recentby !== 'Anonymous'" href="#/profile/{{item.recentby}}">{{item.recentby}}</a>
+            <span ng-if="item.recentby === 'Anonymous'">Anonymous</span>
+            | {{item.snippets.length}} snippets | {{item.views}} views</p>
+        <h3>{{item.title}}</h3>
+        <h5>{{item.opening}}</h5>
+        <a href="#/story/{{item._id}}" class="btn read-story">Read</a>
+      </div>
+    </div>
+  </div> -->
+
+</div>
