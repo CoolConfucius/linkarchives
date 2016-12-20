@@ -1,6 +1,9 @@
-console.log('future routes');
+console.log('routes js');
 var users = require('./../controllers/users.js');
-var items = require('./../controllers/items.js');
+var collections = require('./../controllers/collections.js');
+var links = require('./../controllers/links.js');
+
+// var items = require('./../controllers/items.js');
 
 module.exports = function(app){
 
@@ -14,12 +17,26 @@ module.exports = function(app){
   app.delete('/users/:id', users.delete)
 
 
-  app.get('/items', items.index)
-  app.get('/items/:id', items.show)
-  app.post('/items', items.create)
-  // app.put('/items/:id', items.update)
-  app.put('/items/:id', items.toggle)
-  app.delete('/items/:id', items.delete)
+
+  app.get('/collections', collections.index)
+  app.get('/collections/:id', collections.show)
+  app.post('/collections', collections.create)
+  app.put('/collections/:id', collections.update)
+  app.delete('/collections/:id', collections.delete)
+
+  app.get('/links', links.index)
+  app.get('/links/:id', links.show)
+  app.post('/links', links.create)
+  app.put('/links/:id', links.update)
+  app.delete('/links/:id', links.delete)
+
+
+  // app.get('/items', items.index)
+  // app.get('/items/:id', items.show)
+  // app.post('/items', items.create)
+  // // app.put('/items/:id', items.update)
+  // app.put('/items/:id', items.toggle)
+  // app.delete('/items/:id', items.delete)
 
 
 }
