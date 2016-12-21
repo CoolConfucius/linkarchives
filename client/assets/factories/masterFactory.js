@@ -1,9 +1,14 @@
 console.log('Master Factory');
 
-app.factory('usersFactory', ['$http', function($http){
+app.factory('usersFactory', ['$http', '$localStorage', '$rootScope', function($http, $localStorage, $rootScope){
   console.log("usersFactory");
+  console.log("$localStorage in usersFactory: ", $localStorage);
   var users = []; 
-  var loggedinuser = {}; 
+  var loguser = null; 
+  if ($localStorage.token && $localStorage.token.username) {
+    loguser = $localStorage.token; 
+    console.log("loguser: ", loguser);
+  }; 
 
   function UsersFactory(){
     
@@ -16,34 +21,44 @@ app.factory('usersFactory', ['$http', function($http){
         if (returned_data.data == "Username already taken") {
           console.log("Username already taken. ");
           callback(returned_data.data);
-        };
-        if (typeof(callback) == 'function'){
+        } else if (typeof(callback) == 'function'){
           var untoken = returned_data.config.data; 
-          loggedinuser = untoken; 
-          users.push(loggedinuser); 
-          console.log("users and loggedinuser: ", users, loggedinuser);
-          callback(loggedinuser);
+          loguser = untoken; 
+          $rootScope.rootuser = untoken; 
+          users.push(loguser); 
+          console.log("users and loguser: ", users, loguser);
+          callback(loguser);
         }
       });
     }
 
-    this.login = function(name, callback){
-      console.log('usersFactory login, ', name);
-      $http.get(`/login/${name}`).then(function(data){
+    this.login = function(user, callback){
+      console.log('usersFactory login, ');
+      console.log(user);
+      $http.post(`/users/login`, user).then(function(data){
         console.log("login data: ", data);
-        if (data.data.nouser) {
-          console.log("No existing user, so create one");
-          register({name: name}, callback);
-        } else {
-          loggedinuser = data.data; 
-          callback(data.data); 
-        }
+        
+        // if (data) {
+        //   // $rootScope.rootuser = data;
+          
+          
+        // };
+        // if (data.data.nouser) {
+        //   console.log("No existing user, so create one");
+        //   register({name: name}, callback);
+        // } else {
+        //   loguser = data.data; 
+        //   callback(data.data); 
+        // }
+        callback(data); 
       })
     };
 
     this.logout = function(callback){
       console.log('usersFactory logout ');
-      loggedinuser = {}; 
+      loguser = null; 
+      $localStorage.token = null; 
+      $rootScope.rootuser = null; 
       callback();
     };
 
@@ -68,7 +83,7 @@ app.factory('usersFactory', ['$http', function($http){
       callback(users);
     };
     this.getUser = function(callback){
-      callback(loggedinuser);
+      callback(loguser);
     };
   }
 

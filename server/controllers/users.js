@@ -34,7 +34,6 @@ function UsersController(){
           bcrypt.hash(password, salt, null, function(err2, hash) {
             if(err1 || err2) res.send(err1 || err2);
             
-
             var newUser = new User();
             newUser.username = username;
             newUser.password = hash;
@@ -51,36 +50,31 @@ function UsersController(){
         });
       }
     })
-    // var user = new User({
-    //   name: req.body.name,
-    //   _items: [] 
-    // });
-    // user.save(function(err, user){
-    //   if(err){
-    //     console.log(err);
-    //     console.log('create method saving user');
-    //   } else {
-    //     console.log('successfully added a user!');        
-    //     console.log(user);
-          
-    //     res.json(user);
-    //   }
-    // })
+    
   };
 
   
 
   this.login = function(req, res){
-    console.log("UsersController Login: ", req.params);
-    console.log(req.params.name);
-    User.findOne({name: req.params.name}, function(err, user){
-      if (err || !user) {
-        console.log("err or no user: ", err, user);
-        res.json({nouser: true});
-        res.end();
+    console.log("UsersController Login: ", req.body);
+    
+    User.findOne({username: req.body.username}, function(err, dbUser){
+      if (err || !dbUser) {
+        console.log("err or no dbUser: ", err, dbUser);
+        // res.status(401).send(err);
+        res.status(401).json({nouser: true});
       } else {
-        console.log("user: ", user);
-        res.json(user);
+        console.log("found dbUser: ", dbUser);
+        bcrypt.compare(req.body.password, dbUser.password, function(err, isGood){
+          if (err || !isGood) {
+            res.status(401).send('invalid username or password'); 
+          } else {
+            console.log("Password is good! ");
+            dbUser.password = null; 
+            var token = dbUser.token(); 
+            res.status(200).json(token); 
+          }
+        })
       }
     })
   };

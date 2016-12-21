@@ -54,6 +54,12 @@ app.config(function($stateProvider, $urlRouterProvider){
   // })
 })
 
+app.run(function($rootScope, usersFactory){
+  console.log("App.run! ");
+  usersFactory.getUser(function(data){
+    $rootScope.rootuser = data; 
+  }); 
+})
 
 
 // app.run(function(Auth, Story, $rootScope){

@@ -48,13 +48,15 @@
               <input ng-model="logusername" type="text" class="form-control" placeholder="Username">
               <input ng-model="logpassword" type="password" class="form-control" placeholder="Password">
             </div>
-            <button ng-if="!loguser" ng-click="login()" type="submit" class="btn btn-default">Login</button>
-            <a ng-if="!loguser" href="#!/register" type="" class="btn btn-default">Register</a>
+            <button ng-if="!loguser && !rootuser" ng-click="login()" type="submit" class="btn btn-default">Login</button>
+            <a ng-if="!loguser && !rootuser" href="#!/register" type="" class="btn btn-default">Register</a>
             
-            <a ng-if="loguser" href="#!/user/{{loguser.name}}" type="" class="btn btn-default">Welcome, {{loguser.name}}!</a>
+            <a ng-if="loguser" href="#!/user/{{loguser.username}}" type="" class="btn btn-default">Welcome, {{loguser.username}}!</a>
+
+            <a ng-if="!loguser && rootuser" href="#!/user/{{rootuser.username}}" type="" class="btn btn-default">Welcome, {{rootuser.username}}!</a>
             
 
-            <button ng-if="loguser" ng-click="logout()" type="" class="btn btn-default">Logout!</button>
+            <button ng-if="loguser || rootuser" ng-click="logout()" type="" class="btn btn-default">Logout!</button>
           </form>
 
         </ul>

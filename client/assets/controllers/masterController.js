@@ -2,50 +2,42 @@ console.log("masterCtrl");
 
 var app = angular.module('app');
 
-app.controller('navCtrl', ['$scope', '$location', 'usersFactory', function($scope, $location, usersFactory){
+app.controller('navCtrl', ['$scope', '$state', '$rootScope', 'usersFactory', function($scope, $state, $rootScope, usersFactory){
   console.log("navCtrl");
-  // $scope.loguser = {};
-  // $scope.loguser = {
-  //   name: "Ben"
-  // };
+  $scope.loguser = null; 
+  usersFactory.getUser(function(data){
+    $scope.loguser = data; 
+    console.log("navCtrl usersFactory getUser, ", data);
+  })
 
   $scope.login = function(){
-
-    usersFactory.login($scope.username, function(data){
+    var user = {
+      password: $scope.logpassword,
+      username: $scope.logusername
+    }
+    usersFactory.login(user, function(data){
       console.log('login data', data);
-      if (!data) {
-        console.log("False login data");
-        // usersFactory.create($scope.username, function(data){
-        //   console.log("create new user!", data);
-        //   // $location.url('/');  
-        //   $scope.currentuser = data; 
-        //   $location.url('/dashboard');
-        // })
+      if (data) {
+        
 
+        $scope.loguser = data; 
+        // $rootScope.rootuser = data;
+        $state.go('home');
       } else {
-        $scope.currentuser = data; 
-        $location.url('/dashboard');
-        // $location.url('/');
+        console.log("False login data");
+        swal("Invalid Password or Username");
       };
     })
   }
 
   $scope.logout = function(){
     console.log("Logging out");
-    if ($scope.loguser) {
+    usersFactory.logout(function(){
       $scope.loguser = null;   
-    } else {
-      $scope.loguser = { name: 'Ben' };
-    }
-    
-
-    // usersFactory.logout(function(){
-    //   console.log("Logged out!");
-
-      // alert("logged out!");
-      // $location.url('/');
-    // })
+      $state.go('home')
+    })
   }
+  // console.log("scope: ", $scope);
 }])
 
 
@@ -68,6 +60,7 @@ app.controller('registerCtrl', ['$scope', '$state', '$localStorage', 'usersFacto
         swal("Username already taken!");  
       } else {
         $localStorage.token = data; 
+        $localStorage.token.password = null; 
         // $rootScope.user = data;
         $scope.currentuser = data; 
         $state.go('home');
