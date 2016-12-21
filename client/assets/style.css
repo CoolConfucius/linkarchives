@@ -1,0 +1,264 @@
+body {
+  /*font-family: 'Libre Baskerville', serif;*/
+  /*background-color: ivory; */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  /*color: #444; */
+}
+
+h3 {
+  /*color: #444;*/
+  margin-top: 5px; 
+}
+
+h5 {
+  /*color: #444; */
+}
+
+.navbar {
+  /*background-color: oldlace;*/
+  border-radius: 0; 
+  }
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > .active > a:hover {
+  /*background-color: ivory; */
+  }
+
+.btn {
+  /*background-color: papayawhip;*/
+  border: 1px solid #ccc;
+  /*color: #777; */
+}
+
+.btn:hover,
+.btn-default.active.focus,
+.btn-default.active:focus,
+.btn-default.active:hover,
+.btn-default:active.focus,
+.btn-default:active:focus,
+.btn-default:active:hover,
+.open > .dropdown-toggle.btn-default.focus,
+.open > .dropdown-toggle.btn-default:focus,
+.open > .dropdown-toggle.btn-default:hover {
+  /*background-color: oldlace; */
+}
+
+#home .controls-row {
+  text-align: center; 
+}
+
+#home .controls-row .dropdown {
+  display: inline-block; 
+}
+
+#home .story-preview {
+  margin-top: 25px;
+  padding-top: 15px;
+  /*background-color: honeydew; */
+}
+
+#home .story-preview.closed {
+  /*background-color: seashell; */
+}
+
+#home .read-story {
+  float: right;
+  margin-right: -15px; 
+}
+
+#home nav.pages {
+  text-align: center; 
+}
+
+#home nav.pages a {
+  /*background-color: oldlace;*/
+  /*color: #333; */
+}
+
+#home nav.pages a.active {
+  /*background-color: papayawhip;*/
+  /*color: #333; */
+}
+
+#new-story .form {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 25px;
+  /*background-color: oldlace; */
+}
+
+#new-story .input-row {
+  margin-bottom: 15px; 
+}
+
+#new-story h3 {
+  display: inline-block;
+  margin-right: 25px; 
+}
+
+#new-story input[type=text] {
+  display: inline-block;
+  width: 50%;
+  position: relative;
+  top: -4px;
+  margin-bottom: 25px; 
+}
+
+#new-story input[type=text]:focus {
+  /*outline: 3px solid papayawhip; */
+}
+
+#new-story input[type=radio] {
+  position: absolute;
+  top: -99999px;
+  left: -99999px; 
+}
+
+#new-story input[type=radio] + label {
+  /*background-color: papayawhip;*/
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  /*color: #444;*/
+  margin-right: 15px;
+  margin-bottom: 10px; 
+}
+
+#new-story input[type=radio]:checked + label.open {
+  /*background-color: honeydew;*/
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  /*color: #444;*/
+  margin-right: 15px; 
+}
+
+#new-story input[type=radio]:checked + label.closed {
+  /*background-color: seashell;*/
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  /*color: #444;*/
+  margin-right: 15px; 
+}
+
+#new-story span {
+  margin-bottom: 25px; 
+}
+
+#new-story textarea {
+  width: 100%;
+  resize: vertical;
+  outline: none;
+  padding: 5px;
+  border: 1px solid #ccc; 
+}
+
+#new-story textarea:focus {
+  /*outline: 3px solid papayawhip; */
+}
+
+#new-story .publish-snippet {
+  float: right; 
+}
+
+#story .info, #profile .info {
+  text-align: center; 
+}
+
+#story .info .title,
+#profile .info .title {
+  margin-bottom: 10px; 
+}
+
+#story .tag {
+  /*background-color: honeydew;*/
+  /*color: #444;*/
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px;
+  display: inline-block;
+  margin-top: 10px; 
+}
+
+#story .info .btn {
+  height: 34px;
+  margin-top: -3px;
+  /*color: #444; */
+}
+
+#story .info .fa-heart {
+  padding-top: 8px; 
+}
+
+#story .story-box {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 25px;
+  margin-top: 25px;
+  margin-bottom: 25px; 
+}
+
+#story .story-box .snippet {
+  margin-top: -15px; 
+}
+
+#story .story-box .snippet .authorname {
+  font-size: 10px;
+  margin-bottom: 0px;
+  /*color: green; */
+}
+
+#story .story-box .snippet .authorname:hover {
+  /*color: lime; */
+}
+
+#story .story-box .snippet p {
+  margin-left: 25px; 
+}
+
+#story .new-snippet {
+  float: right;
+  margin-right: -15px; 
+}
+
+#story textarea {
+  margin-top: 25px;
+  width: 100%;
+  resize: vertical; 
+}
+
+#story .publish-snippet {
+  float: right;
+  margin-bottom: 150px; 
+}
+
+#profile a.edit-profile-btn {
+  float: right; 
+}
+
+#profile .panel-group {
+  margin-top: 25px; 
+}
+
+#profile .panel-default > .panel-heading {
+  /*background-color: papayawhip; */
+}
+
+#profile .panel-default > .panel-heading + .panel-collapse > .panel-body {
+  /*background-color: oldlace; */
+}
+
+#profile .info {
+  margin-bottom: 25px; 
+}
+
+#profilepic {
+  max-width: 300px;
+  max-height: 300px; 
+}

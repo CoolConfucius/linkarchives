@@ -1,5 +1,191 @@
-<div class="container" ng-controller="profileCtrl">
-  {{profileuser}}
+{{profileuser}}
+
+<div class="container" id="profile">
+  
+  <div class="col-xs-12" ng-if="loguser && profileuser.username === loguser.username">
+    <a ng-click="editprofile()" href="" class="btn edit-profile-btn fa fa-pencil"> Edit Profile</a>
+  </div>
+
+  <div class="row info">    
+    <img ng-if="profileuser.imageurl && !isediting" src="{{profileuser.imageurl}}" alt="" id="profilepic">
+    <h1 class="title">{{profileuser.username}}</h1>
+    <span>Member since: {{profileuser.createdAt}}</span>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a href="#/userstories/{{profileuser.username}}">
+              Collections
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <ul>
+              <li ng-repeat="story in profileuser.collections | orderBy:-story.startdate">
+                <a href="#/story/{{story._id}}">
+                  {{story.title}}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a href="#/userlinks/{{profileuser.username}}">
+              Links
+            </a>
+          </h4>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a href="#/userfavorites/{{profileuser.username}}">
+              Favorites
+            </a>
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-hide="isediting" class="col-sm-8">
+    <h2 ng-if="profileuser.summary">About Me</h2>
+    <p ng-if="profileuser.summary">{{profileuser.summary}}</p>
+    <h3 ng-if="!profileuser.summary && profileuser.username === username">Introduce yourself! Click on the pencil above to edit your profile</h3>
+    <h2>Information</h2>
+
+    <div class="col-sm-6">
+      <p>Collections:</p>
+    </div>
+    <div class="col-sm-6">
+      <p>{{profileuser.collections.length}}</p>
+    </div>
+
+    <div class="col-sm-6">
+      <p>Links:</p>
+    </div>
+    <div class="col-sm-6">
+      <p>{{profileuser.links.length}}</p>
+    </div>
+
+    <div ng-if="profileuser.age" class="col-sm-6">
+      <p>Age:</p>
+    </div>
+    <div ng-if="profileuser.age" class="col-sm-6">
+      <p>{{profileuser.age}}</p>
+    </div>
+
+    <div ng-if="profileuser.birthday" class="col-sm-6">
+      <p>Birthday:</p>
+    </div>
+    <div ng-if="profileuser.birthday" class="col-sm-6">
+      <p>{{profileuser.birthday | date:'MM/dd/yyyy'}}</p>
+    </div>
+
+    <div ng-if="profileuser.gender" class="col-sm-6">
+      <p>Gender:</p>
+    </div>
+    <div ng-if="profileuser.gender" class="col-sm-6">
+      <p>{{profileuser.gender}}</p>
+    </div>
+
+    <div ng-if="profileuser.interests" class="col-sm-6">
+      <p>Interests:</p>
+    </div>
+    <div ng-if="profileuser.interests" class="col-sm-6">
+      <p>{{profileuser.interests}}</p>
+    </div>
+
+    <div ng-if="profileuser.email" class="col-sm-6">
+      <p>Email:</p>
+    </div>
+    <div ng-if="profileuser.email" class="col-sm-6">
+      <p>{{profileuser.email}}</p>
+    </div>
+
+    <div ng-if="profileuser.location" class="col-sm-6">
+      <p>Location:</p>
+    </div>
+    <div ng-if="profileuser.location" class="col-sm-6">
+      <p>{{profileuser.location}}</p>
+    </div>
+
+
+  </div>
+
+  <div ng-show="isediting" class="col-sm-8">
+    <h2>About Me</h2>
+    <!-- <input type="text"> -->
+    <textarea ng-model="editobj.summary" name="description" id="" cols="30" rows="6"></textarea>
+    
+    <div class="col-sm-6">
+      <br>
+      <p>Profile Image URL:</p>
+      <input ng-model="editobj.imageurl" type="text">
+    </div>
+
+    <div class="col-sm-6">
+      <br>
+      <p>Age:</p>
+      <input ng-model="editobj.age" type="number" min="10">
+    </div>
+
+    <div class="col-sm-6">
+      <br>
+      <p>Birthday:</p>
+      <input ng-model="editobj.birthday" type="date">
+    </div>
+
+    <div class="col-sm-6">
+      <br>
+      <p>Gender:</p>
+      <input ng-model="editobj.gender" type="text">
+    </div>
+
+    <div class="col-sm-6">
+      <br>
+      <p>Location:</p>
+      <input ng-model="editobj.location" type="text">
+    </div>
+
+    <div class="col-sm-6">
+      <br>
+      <p>Email:</p>
+      <input ng-model="editobj.email" type="text">
+    </div>
+
+    <div class="col-sm-12">
+      <br>
+      <p>Interests:</p>
+      <input ng-model="editobj.interests" type="text">
+    </div>
+
+
+    <div class="col-sm-6">
+      <br>
+      <br>
+      <button ng-click="savechanges(editobj)" class="btn">Save changes</button>
+    </div>
+
+    <div class="col-sm-6">
+      <br>
+      <br>
+      <button ng-click="editprofile()" class="btn">Cancel edit</button>
+    </div>
+    
+  </div>
+
+</div>
+
+<!-- <div class="container">
+  
   <h3>{{profileuser.username}}'s Bucket List</h3>
   <br>
   <div class="continer">
@@ -21,4 +207,4 @@
       </p>
     </div>
   </div>
-</div>
+</div> -->

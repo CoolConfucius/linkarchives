@@ -10,7 +10,7 @@ var UserSchema = new mongoose.Schema({
   // username: {type: String, required: true, unique: true},
   username: {type: String},
   password: {type: String},
-  imageurl: { type: String },
+  imageurl: { type: String, default: "http://orig01.deviantart.net/bc8c/f/2014/094/3/6/inspector_shibe_by_marustagram-d7cwcvj.jpg" },
   summary: { type: String }, 
   age: { type: Number }, 
   birthday: { type: Date }, 
