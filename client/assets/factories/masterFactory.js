@@ -7,14 +7,21 @@ app.factory('usersFactory', ['$http', function($http){
 
   function UsersFactory(){
     
-    function register(newuser, callback){
+    this.register = function(newuser, callback){
       console.log("factory registering user");
-      $http.post('/users', newuser).then(function(returned_data){
-        console.log("returned_data: ", returned_data.data);
+      $http.post('/users/register', newuser).then(function(returned_data){
+        console.log("returned_data: ", returned_data);
+        // the returned_data is the token! 
+
+        if (returned_data.data == "Username already taken") {
+          console.log("Username already taken. ");
+          callback(returned_data.data);
+        };
         if (typeof(callback) == 'function'){
-          loggedinuser = returned_data.data; 
+          var untoken = returned_data.config.data; 
+          loggedinuser = untoken; 
           users.push(loggedinuser); 
-          console.log(users, loggedinuser);
+          console.log("users and loggedinuser: ", users, loggedinuser);
           callback(loggedinuser);
         }
       });

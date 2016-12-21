@@ -2,19 +2,28 @@ console.log('routes js');
 var users = require('./../controllers/users.js');
 var collections = require('./../controllers/collections.js');
 var links = require('./../controllers/links.js');
+// var authMiddleware = require('../config/auth');
 
 // var items = require('./../controllers/items.js');
 
 module.exports = function(app){
 
   app.get('/users', users.index)
-  app.get('/login/:name', users.login)
+  app.post('/users/register', users.create)
+  app.post('/users/login', users.login)
   
+  // app.get('/login/:name', users.login)
+  
+  // app.get('/login/:name', users.login)
   app.get('/users/:name', users.show)
   // app.get('/users/:id', users.show)
   app.post('/users', users.create)
   app.put('/users/:id', users.update)
   app.delete('/users/:id', users.delete)
+  
+  // app.get('/users/checkfave/:username/:collectionid', authMiddleware, users.checkfave);
+  // app.put('/users/addfave/:username/:collectionid', authMiddleware, users.addfave);
+  // app.put('/users/unfave/:username/:collectionid', authMiddleware, users.unfave);
 
 
 

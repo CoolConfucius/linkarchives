@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
     path = require('path'),
     models_path = path.join(__dirname, './../models'),
     reg = new RegExp(".js$", "i"),
-    dbURI = 'mongodb://localhost/basic_mongoose';
+    dbURI = 'mongodb://localhost/linkarchives';
 
 
 mongoose.Promise = global.Promise;

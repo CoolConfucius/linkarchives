@@ -5,9 +5,30 @@ var app = angular.module('app');
 app.controller('navCtrl', ['$scope', '$location', 'usersFactory', function($scope, $location, usersFactory){
   console.log("navCtrl");
   // $scope.loguser = {};
-  $scope.loguser = {
-    name: "Ben"
-  };
+  // $scope.loguser = {
+  //   name: "Ben"
+  // };
+
+  $scope.login = function(){
+
+    usersFactory.login($scope.username, function(data){
+      console.log('login data', data);
+      if (!data) {
+        console.log("False login data");
+        // usersFactory.create($scope.username, function(data){
+        //   console.log("create new user!", data);
+        //   // $location.url('/');  
+        //   $scope.currentuser = data; 
+        //   $location.url('/dashboard');
+        // })
+
+      } else {
+        $scope.currentuser = data; 
+        $location.url('/dashboard');
+        // $location.url('/');
+      };
+    })
+  }
 
   $scope.logout = function(){
     console.log("Logging out");
@@ -28,30 +49,34 @@ app.controller('navCtrl', ['$scope', '$location', 'usersFactory', function($scop
 }])
 
 
-app.controller('registerCtrl', ['$scope', '$location', 'usersFactory', function($scope, $location, usersFactory){
+app.controller('registerCtrl', ['$scope', '$state', '$localStorage', 'usersFactory', function($scope, $state, $localStorage, usersFactory){
   console.log("registerCtrl");
   $scope.username = '';
 
-  $scope.login = function(){
-
-    usersFactory.login($scope.username, function(data){
-      console.log('login data', data);
-      if (!data) {
-        console.log("False login data");
-        usersFactory.create($scope.username, function(data){
-          console.log("create new user!", data);
-          // $location.url('/');  
-          $scope.currentuser = data; 
-          $location.url('/dashboard');
-        })
-
+  $scope.register = function(){
+    if ($scope.regpassword !== $scope.regconfirmpassword) {
+      swal("Passwords not the same!");
+      return;
+    };
+    var user = {
+      username: $scope.regusername,
+      password: $scope.regpassword
+    }
+    usersFactory.register(user, function(data){
+      console.log("user controller factory register", data);
+      if (data === "Username already taken") {
+        swal("Username already taken!");  
       } else {
+        $localStorage.token = data; 
+        // $rootScope.user = data;
         $scope.currentuser = data; 
-        $location.url('/dashboard');
-        // $location.url('/');
-      };
+        $state.go('home');
+      }
     })
   }
+
+
+  
 
 }])
 
