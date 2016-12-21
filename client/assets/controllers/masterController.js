@@ -20,10 +20,10 @@ app.controller('navCtrl', ['$scope', '$state', '$rootScope', 'usersFactory', fun
       if (data === "No user in the database" || data === "Invalid password") {
         swal(data);  
       } else {
-        $localStorage.token = data; 
-        $localStorage.token.password = null; 
+        // $localStorage.token = data; 
+        // $localStorage.token.password = null; 
         // $rootScope.user = data;
-        $scope.currentuser = data; 
+        $scope.loguser = data; 
         $state.go('home');
       }
     })
@@ -58,8 +58,8 @@ app.controller('registerCtrl', ['$scope', '$state', '$localStorage', 'usersFacto
       if (data === "Username already taken") {
         swal("Username already taken!");  
       } else {
-        $localStorage.token = data; 
-        $localStorage.token.password = null; 
+        // $localStorage.token = data; 
+        // $localStorage.token.password = null; 
         // $rootScope.user = data;
         $scope.currentuser = data; 
         $state.go('home');
@@ -75,7 +75,12 @@ app.controller('registerCtrl', ['$scope', '$state', '$localStorage', 'usersFacto
 app.controller('homeCtrl', ['$scope', '$location', 'usersFactory', 'itemsFactory', function($scope, $location, usersFactory, itemsFactory){
   console.log("homeCtrl");
   $scope.collectionform = true; 
-  $scope.loguser = {}; 
+  
+  $scope.loguser = null; 
+  usersFactory.getUser(function(data){
+    $scope.loguser = data; 
+    console.log("navCtrl usersFactory getUser, ", data);
+  })
   $scope.users = [];
   $scope.items = [];
   $scope.newitem = {};
@@ -149,11 +154,13 @@ app.controller('homeCtrl', ['$scope', '$location', 'usersFactory', 'itemsFactory
 app.controller('profileCtrl', ['$scope', '$location', '$routeParams', 'usersFactory', 'itemsFactory', function($scope, $location, $routeParams, usersFactory, itemsFactory){
   console.log("profileCtrl", $routeParams);
   $scope.sameuser = false; 
-  $scope.loggedinuser = {}; 
-  $scope.profileuser = {}; 
+  $scope.loguser = null; 
   usersFactory.getUser(function(data){
-    $scope.loggedinuser = data; 
-  })
+    $scope.loguser = data; 
+    console.log("navCtrl usersFactory getUser, ", data);
+  }) 
+  $scope.profileuser = {}; 
+  
   usersFactory.show($routeParams.name, function(data){
     console.log("data , ", data);
     $scope.profileuser = data; 

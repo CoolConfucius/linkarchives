@@ -17,9 +17,9 @@ app.config(function($stateProvider, $urlRouterProvider){
   // .state('snippet', { 
   //   url: '/snippet/:snippetid', templateUrl: 'partials/snippet.html', 
   //   controller: 'snippetCtrl' })
-  // .state('profile', { 
-  //   url: '/profile/:profilename', templateUrl: 'partials/profile.html', 
-  //   controller: 'profileCtrl' })
+  .state('profile', { 
+    url: '/profile/:profilename', templateUrl: 'partials/profile.html', 
+    controller: 'profileCtrl' })
   // .state('userstories', { 
   //   url: '/userstories/:profilename', templateUrl: 'partials/userstories.html', 
   //   controller: 'profileCtrl' })

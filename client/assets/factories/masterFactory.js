@@ -23,7 +23,9 @@ app.factory('usersFactory', ['$http', '$localStorage', '$rootScope', function($h
           callback(returned_data.data);
         } else if (typeof(callback) == 'function'){
           var untoken = returned_data.config.data; 
+          untoken.password = null; 
           loguser = untoken; 
+          $localStorage.token = untoken; 
           $rootScope.rootuser = untoken; 
           users.push(loguser); 
           console.log("users and loguser: ", users, loguser);
@@ -40,11 +42,12 @@ app.factory('usersFactory', ['$http', '$localStorage', '$rootScope', function($h
         if (data.data === "No user in the database" || data.data === "Invalid password") {
           callback(data.data);
         } else if (typeof(callback) == 'function'){
-          var untoken = returned_data.config.data; 
+          var untoken = data.config.data; 
+          untoken.password = null; 
           loguser = untoken; 
+          $localStorage.token = untoken; 
           $rootScope.rootuser = untoken; 
-          users.push(loguser); 
-          console.log("users and loguser: ", users, loguser);
+          console.log("loguser: ", loguser);
           callback(loguser);
         }
       })
@@ -68,7 +71,7 @@ app.factory('usersFactory', ['$http', '$localStorage', '$rootScope', function($h
     };
     
     this.show = function(name, callback){
-      $http.get(`/users/${name}`).then(function(data){
+      $http.get(`/users/${username}`).then(function(data){
         console.log("show data: ", data);
         var profileuser = data.data; 
         callback(profileuser); 
