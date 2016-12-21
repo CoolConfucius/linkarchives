@@ -37,20 +37,16 @@ app.factory('usersFactory', ['$http', '$localStorage', '$rootScope', function($h
       console.log(user);
       $http.post(`/users/login`, user).then(function(data){
         console.log("login data: ", data);
-        
-        // if (data) {
-        //   // $rootScope.rootuser = data;
-          
-          
-        // };
-        // if (data.data.nouser) {
-        //   console.log("No existing user, so create one");
-        //   register({name: name}, callback);
-        // } else {
-        //   loguser = data.data; 
-        //   callback(data.data); 
-        // }
-        callback(data); 
+        if (data.data === "No user in the database" || data.data === "Invalid password") {
+          callback(data.data);
+        } else if (typeof(callback) == 'function'){
+          var untoken = returned_data.config.data; 
+          loguser = untoken; 
+          $rootScope.rootuser = untoken; 
+          users.push(loguser); 
+          console.log("users and loguser: ", users, loguser);
+          callback(loguser);
+        }
       })
     };
 

@@ -62,12 +62,14 @@ function UsersController(){
       if (err || !dbUser) {
         console.log("err or no dbUser: ", err, dbUser);
         // res.status(401).send(err);
-        res.status(401).json({nouser: true});
+        // res.status(401).json({nouser: true});
+        res.send("No user in the database");
       } else {
         console.log("found dbUser: ", dbUser);
         bcrypt.compare(req.body.password, dbUser.password, function(err, isGood){
           if (err || !isGood) {
-            res.status(401).send('invalid username or password'); 
+            // res.status(401).send('invalid username or password'); 
+            res.send('Invalid password'); 
           } else {
             console.log("Password is good! ");
             dbUser.password = null; 

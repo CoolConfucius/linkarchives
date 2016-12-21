@@ -17,16 +17,15 @@ app.controller('navCtrl', ['$scope', '$state', '$rootScope', 'usersFactory', fun
     }
     usersFactory.login(user, function(data){
       console.log('login data', data);
-      if (data) {
-        
-
-        $scope.loguser = data; 
-        // $rootScope.rootuser = data;
-        $state.go('home');
+      if (data === "No user in the database" || data === "Invalid password") {
+        swal(data);  
       } else {
-        console.log("False login data");
-        swal("Invalid Password or Username");
-      };
+        $localStorage.token = data; 
+        $localStorage.token.password = null; 
+        // $rootScope.user = data;
+        $scope.currentuser = data; 
+        $state.go('home');
+      }
     })
   }
 
