@@ -77,6 +77,15 @@ app.factory('usersFactory', ['$http', '$localStorage', '$rootScope', function($h
         callback(profileuser); 
       })
     };
+
+    this.edit = function(username, editobj, callback){
+
+      $http.put(`/users/${username}`, editobj).then(function(data){
+        console.log("usersFactory show data: ", data);
+        var profileuser = data.data; 
+        callback(profileuser); 
+      })
+    }
     
     this.getUsers = function(callback){
       callback(users);

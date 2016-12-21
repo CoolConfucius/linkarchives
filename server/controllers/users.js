@@ -100,15 +100,25 @@ function UsersController(){
   //   })
   // };
   this.update = function(req, res){
-    var edituser = {
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      birthday: req.body.birthday
-    }
-    User.findOneAndUpdate({_id: req.params.id}, edituser, function(err, user){
-      res.json(user);
-    })
-
+    console.log("req body and req params", req.body, req.params);
+    var username = req.params.username; 
+    var userObj = req.body; 
+    User.findOne({username: username}, function(err, user){
+      if(err) res.status(400).send(err); 
+      user.imageurl = userObj.imageurl; 
+      user.summary = userObj.summary; 
+      user.age = userObj.age; 
+      user.birthday = userObj.birthday; 
+      user.gender = userObj.gender; 
+      user.interests = userObj.interests; 
+      user.email = userObj.email; 
+      user.location = userObj.location; 
+      user.save(function(err, savedUser){
+        user.password = null; 
+        if (err) res.status(400).send(err);
+        res.json(savedUser);
+      })
+    });
   };
   this.delete = function(req, res){
     console.log("users delete req params ", req.params);

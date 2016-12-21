@@ -184,18 +184,19 @@ app.controller('profileCtrl', ['$scope', '$state', 'usersFactory', 'itemsFactory
 
   $scope.savechanges = function(editobj){
     if (!$scope.isediting) return;    
-    Profile.edit(profilename, editobj).then(function(){
-      $scope.profile.imageurl = editobj.imageurl,
-      $scope.profile.aboutme = editobj.aboutme,
-      $scope.profile.age = editobj.age,
-      $scope.profile.birthday = editobj.birthday,
-      $scope.profile.gender = editobj.gender,
-      $scope.profile.location = editobj.location,
-      $scope.profile.interests = editobj.interests,
-      $scope.profile.contact = editobj.contact
-    }); 
-    $scope.isediting = false; 
-
+    usersFactory.edit($scope.profileuser.username, $scope.editobj, 
+      function(){
+        $scope.profileuser.imageurl = editobj.imageurl;
+        $scope.profileuser.summary = editobj.summary;
+        $scope.profileuser.age = editobj.age;
+        $scope.profileuser.birthday = editobj.birthday;
+        $scope.profileuser.gender = editobj.gender;
+        $scope.profileuser.location = editobj.location;
+        $scope.profileuser.interests = editobj.interests;
+        $scope.profileuser.email = editobj.email;
+        $scope.isediting = false;
+      }
+    )
   }
 
 }])

@@ -17,8 +17,9 @@ module.exports = function(app){
   // app.get('/login/:name', users.login)
   app.get('/users/:username', users.show)
   // app.get('/users/:id', users.show)
-  app.post('/users', users.create)
-  app.put('/users/:id', users.update)
+  
+  app.put('/users/:username', users.update)
+  // app.put('/users/:id', users.update)
   app.delete('/users/:id', users.delete)
   
   // app.get('/users/checkfave/:username/:collectionid', authMiddleware, users.checkfave);

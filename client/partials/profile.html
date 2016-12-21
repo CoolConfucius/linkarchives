@@ -56,7 +56,7 @@
   </div>
 
   <div ng-hide="isediting" class="col-sm-8">
-    <h2 ng-if="profileuser.summary">About Me</h2>
+    <h2 ng-if="profileuser.summary">Summary</h2>
     <p ng-if="profileuser.summary">{{profileuser.summary}}</p>
     <h3 ng-if="!profileuser.summary && profileuser.username === username">Introduce yourself! Click on the pencil above to edit your profile</h3>
     <h2>Information</h2>
@@ -121,7 +121,7 @@
   </div>
 
   <div ng-show="isediting" class="col-sm-8">
-    <h2>About Me</h2>
+    <h2>Summary</h2>
     <!-- <input type="text"> -->
     <textarea ng-model="editobj.summary" name="description" id="" cols="30" rows="6"></textarea>
     
