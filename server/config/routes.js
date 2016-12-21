@@ -15,7 +15,7 @@ module.exports = function(app){
   // app.get('/login/:name', users.login)
   
   // app.get('/login/:name', users.login)
-  app.get('/users/:name', users.show)
+  app.get('/users/:username', users.show)
   // app.get('/users/:id', users.show)
   app.post('/users', users.create)
   app.put('/users/:id', users.update)

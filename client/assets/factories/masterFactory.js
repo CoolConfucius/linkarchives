@@ -70,9 +70,9 @@ app.factory('usersFactory', ['$http', '$localStorage', '$rootScope', function($h
 
     };
     
-    this.show = function(name, callback){
+    this.show = function(username, callback){
       $http.get(`/users/${username}`).then(function(data){
-        console.log("show data: ", data);
+        console.log("usersFactory show data: ", data);
         var profileuser = data.data; 
         callback(profileuser); 
       })

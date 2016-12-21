@@ -2,7 +2,7 @@ console.log("masterCtrl");
 
 var app = angular.module('app');
 
-app.controller('navCtrl', ['$scope', '$state', '$rootScope', 'usersFactory', function($scope, $state, $rootScope, usersFactory){
+app.controller('navCtrl', ['$scope', '$state', 'usersFactory', function($scope, $state, usersFactory){
   console.log("navCtrl");
   $scope.loguser = null; 
   usersFactory.getUser(function(data){
@@ -20,9 +20,6 @@ app.controller('navCtrl', ['$scope', '$state', '$rootScope', 'usersFactory', fun
       if (data === "No user in the database" || data === "Invalid password") {
         swal(data);  
       } else {
-        // $localStorage.token = data; 
-        // $localStorage.token.password = null; 
-        // $rootScope.user = data;
         $scope.loguser = data; 
         $state.go('home');
       }
@@ -58,10 +55,7 @@ app.controller('registerCtrl', ['$scope', '$state', '$localStorage', 'usersFacto
       if (data === "Username already taken") {
         swal("Username already taken!");  
       } else {
-        // $localStorage.token = data; 
-        // $localStorage.token.password = null; 
-        // $rootScope.user = data;
-        $scope.currentuser = data; 
+        $scope.loguser = data; 
         $state.go('home');
       }
     })
@@ -151,22 +145,24 @@ app.controller('homeCtrl', ['$scope', '$location', 'usersFactory', 'itemsFactory
 
 }])
 
-app.controller('profileCtrl', ['$scope', '$location', '$routeParams', 'usersFactory', 'itemsFactory', function($scope, $location, $routeParams, usersFactory, itemsFactory){
-  console.log("profileCtrl", $routeParams);
+app.controller('profileCtrl', ['$scope', '$state', 'usersFactory', 'itemsFactory', function($scope, $state, usersFactory, itemsFactory){
+  console.log("profileCtrl");
+  console.log("params", $state.params);
   $scope.sameuser = false; 
   $scope.loguser = null; 
   usersFactory.getUser(function(data){
     $scope.loguser = data; 
     console.log("navCtrl usersFactory getUser, ", data);
   }) 
-  $scope.profileuser = {}; 
+  $scope.profileuser = null; 
   
-  usersFactory.show($routeParams.name, function(data){
+  usersFactory.show($state.params.username, function(data){
+    console.log("profileCtrl usersFactory show: ");
     console.log("data , ", data);
     $scope.profileuser = data; 
   })
 
-  if ($routeParams.name === $scope.loggedinuser.name) {
+  if ($state.params.username === $scope.loguser.username) {
     console.log("Profileuser same as LoggedinUser");
     $scope.sameuser = true; 
   } 

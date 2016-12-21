@@ -51,9 +51,9 @@
             <button ng-if="!loguser && !rootuser" ng-click="login()" type="submit" class="btn btn-default">Login</button>
             <a ng-if="!loguser && !rootuser" href="#!/register" type="" class="btn btn-default">Register</a>
             
-            <a ng-if="loguser" href="#!/user/{{loguser.username}}" type="" class="btn btn-default">Welcome, {{loguser.username}}!</a>
+            <a ng-if="loguser" href="#!/users/{{loguser.username}}" type="" class="btn btn-default">Welcome, {{loguser.username}}!</a>
 
-            <a ng-if="!loguser && rootuser" href="#!/user/{{rootuser.username}}" type="" class="btn btn-default">Welcome, {{rootuser.username}}!</a>
+            <a ng-if="!loguser && rootuser" href="#!/users/{{rootuser.username}}" type="" class="btn btn-default">Welcome, {{rootuser.username}}!</a>
             
 
             <button ng-if="loguser || rootuser" ng-click="logout()" type="" class="btn btn-default">Logout!</button>

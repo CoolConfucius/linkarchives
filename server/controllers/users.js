@@ -125,8 +125,8 @@ function UsersController(){
   };
   this.show = function(req, res){
     console.log(req.params);
-    User.findOne({name: req.params.name})
-    .populate('_items')
+    User.findOne({username: req.params.username})
+    // .populate('_items')
     .exec(function(err, user){
       res.json(user);
     })
