@@ -160,6 +160,16 @@ app.controller('profileCtrl', ['$scope', '$state', 'usersFactory', 'itemsFactory
     console.log("profileCtrl usersFactory show: ");
     console.log("data , ", data);
     $scope.profileuser = data; 
+    $scope.editobj = {
+      imageurl: data.imageurl,
+      summary: data.summary,
+      age: data.age, 
+      birthday: data.birthday,
+      gender: data.gender,
+      location: data.location,
+      interests: data.interests,
+      email: data.email
+    }
   })
 
   if ($state.params.username === $scope.loguser.username) {
@@ -167,18 +177,25 @@ app.controller('profileCtrl', ['$scope', '$state', 'usersFactory', 'itemsFactory
     $scope.sameuser = true; 
   } 
 
+  $scope.isediting = false; 
+  $scope.editprofile = function(){
+    $scope.isediting = !$scope.isediting; 
+  }
 
-  $scope.toggle = function(id){
-    console.log("toggle!", id);
-    itemsFactory.toggle(id, function(data){
-      console.log("data: ", data);
-      for (var i = $scope.profileuser._items.length - 1; i >= 0; i--) {
-        if ($scope.profileuser._items[i]._id === id) {
-          $scope.profileuser._items[i].done = !$scope.profileuser._items[i].done;
-          break; 
-        }
-      }
-    })
+  $scope.savechanges = function(editobj){
+    if (!$scope.isediting) return;    
+    Profile.edit(profilename, editobj).then(function(){
+      $scope.profile.imageurl = editobj.imageurl,
+      $scope.profile.aboutme = editobj.aboutme,
+      $scope.profile.age = editobj.age,
+      $scope.profile.birthday = editobj.birthday,
+      $scope.profile.gender = editobj.gender,
+      $scope.profile.location = editobj.location,
+      $scope.profile.interests = editobj.interests,
+      $scope.profile.contact = editobj.contact
+    }); 
+    $scope.isediting = false; 
+
   }
 
 }])
