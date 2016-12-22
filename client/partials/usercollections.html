@@ -1,0 +1,19 @@
+<div class="container" id="home">
+  {{profileuser}}
+  <h1>
+    <a href="#!/users/{{profileuser.username}}">{{profileuser.username}}</a>'s Collections
+  </h1>
+
+  <div ng-repeat='collection in profileuser._collections'>
+    
+    <div ng-class="{closed: collection.isclosed }" class="panel panel-default collection-preview col-sm-8 col-sm-offset-2">
+      <div class="panel-body">
+        created at: {{collection.createdAt}} | updated at: {{collection.updatedAt}} by <a href="#!/users/{{collection.recentby}}">{{collection.recentby}}</a> | {{collection._links.length}} links | {{collection.views}} views</p>
+        <h3 ng-bind="collection.name"></h3>
+        <h5 ng-bind="collection.description"></h5>
+        <a href="#!/collections/{{collection._id}}" class="btn read-collection">View</a>
+      </div>
+    </div>
+  </div>
+
+</div>

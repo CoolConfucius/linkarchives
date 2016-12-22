@@ -17,7 +17,7 @@
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
           <h4 class="panel-title">
-            <a href="#/userstories/{{profileuser.username}}">
+            <a href="#!/usercollections/{{profileuser.username}}">
               Collections
             </a>
           </h4>
@@ -26,7 +26,7 @@
           <div class="panel-body">
             <ul>
               <li ng-repeat="collection in profileuser._collections | orderBy:-collection.createdAt">
-                <a href="#/collection/{{collection._id}}">
+                <a href="#!/collections/{{collection._id}}">
                   {{collection.name}}
                 </a>
               </li>
@@ -37,7 +37,7 @@
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingTwo">
           <h4 class="panel-title">
-            <a href="#/userlinks/{{profileuser.username}}">
+            <a href="#!/userlinks/{{profileuser.username}}">
               Links
             </a>
           </h4>
@@ -46,7 +46,7 @@
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingThree">
           <h4 class="panel-title">
-            <a href="#/userfavorites/{{profileuser.username}}">
+            <a href="#!/userfavorites/{{profileuser.username}}">
               Favorites
             </a>
           </h4>

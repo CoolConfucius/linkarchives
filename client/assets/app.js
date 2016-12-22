@@ -20,14 +20,14 @@ app.config(function($stateProvider, $urlRouterProvider){
   .state('profile', { 
     url: '/users/:username', templateUrl: 'partials/profile.html', 
     controller: 'profileCtrl' })
-  // .state('userstories', { 
-  //   url: '/userstories/:profilename', templateUrl: 'partials/userstories.html', 
-  //   controller: 'profileCtrl' })
+  .state('usercollections', { 
+    url: '/usercollections/:username', templateUrl: 'partials/usercollections.html', 
+    controller: 'profileCtrl' })
   // .state('usersnippets', { 
-  //   url: '/usersnippets/:profilename', templateUrl: 'partials/usersnippets.html', 
+  //   url: '/usersnippets/:username', templateUrl: 'partials/usersnippets.html', 
   //   controller: 'profileCtrl' })
   // .state('userfavorites', { 
-  //   url: '/userfavorites/:profilename', templateUrl: 'partials/userfavorites.html', 
+  //   url: '/userfavorites/:username', templateUrl: 'partials/userfavorites.html', 
   //   controller: 'profileCtrl' })
 
   // .state('/', {

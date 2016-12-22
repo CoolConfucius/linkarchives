@@ -1,8 +1,9 @@
 {{collection}}
+{{loguser}}
 <div class="container" id="collection">
   <div class="row info">
-    <h1 class="title">{{collection.name}}</h1>
-    <h2 class="title">{{collection.description}}</h2>
+    <h1 class="title" ng-bind="collection.name"></h1>
+    <h2 class="title" ng-bind="collection.description"></h2>
     <span>
       Owner: 
       <a ng-if="collection.owner !== 'Anonymous'" href="#!/users/{{collection.owner}}">{{collection.owner}}</a>
@@ -17,19 +18,19 @@
       <span ng-if="!collection.isprivate" class="tag public">Public</span>
       <span ng-if="collection.isprivate" class="tag private">Private</span>
     </div>
-    <div ng-if="user && user.config.data.username !== collection.owner && !isfave" ng-click="addfavorite(user.config.data.username, collection._id, collection.owner)" class="btn favorite fa fa-heart"></div>
-    <div ng-if="user && user.config.data.username !== collection.owner && isfave" ng-click="unfave(user.config.data.username, collection._id)" class="btn glyphicon glyphicon-heart-empty">
+    <div ng-if="loguser.username !== collection.owner && !isfave" ng-click="addfavorite(loguser.username, collection._id, collection.owner)" class="btn favorite fa fa-heart"></div>
+    <div ng-if="loguser.username !== collection.owner && isfave" ng-click="unfave(loguser.username, collection._id)" class="btn glyphicon glyphicon-heart-empty">
     </div>
   </div>
-  <div ng-if="collection.owner === user.config.data.username" class="row">
+  <div ng-if="collection.owner === loguser.username" class="row">
     <br>
     <button ng-click="editstory(collection, user)" class="col-sm-2 col-sm-offset-2 btn">
       <span class="glyphicon glyphicon-pencil"></span>
-      Edit Story
+      Edit Collection
     </button>
     <button ng-click="deletestory(collection, user)" ng-if="iseditstory" class="col-sm-2 btn btn">
       <span class="glyphicon glyphicon-trash"></span>
-      Delete Story
+      Delete Collection
     </button>
     <button ng-click="remove()" ng-if="isdeleting" class="col-sm-2 btn">Confirm delete</button>
   </div>
@@ -66,32 +67,37 @@
 
 
   <div ng-hide="iseditstory" class="collection-box col-sm-8 col-sm-offset-2">
-    <div class="snippet">
+    <div class="link">
       <p>{{collection.description}} </p>
     </div>
     <br>
-    <div ng-repeat='snippet in collection.snippets track by $index' class="snippet">
-      <div class="row">
-        <a ng-if="snippet.writtenby !== 'Anonymous'" href="#!/users/{{snippet.writtenby}}" class="authorname col-sm-8">{{snippet.writtenby}}</a>
-        <span ng-if="collection.writtenby === 'Anonymous'">Anonymous</span>
-        <a href="#!/snippet/{{snippet._id}}" ng-if="snippet.writtenby === user.config.data.username" class="col-sm-1 col-sm-offset-3 authorname glyphicon glyphicon-pencil"></a>
+    <div class="btn btn-sm" ng-click="toggleshowaddedby()">
+      <span ng-show="showaddedby">Hide added by</span>
+      <span ng-hide="showaddedby">Show added by</span>
+    </div>
+    <br><br>
+    <div ng-repeat='link in collection._links track by $index' class="link">
+      <!-- {{link}} -->
+      <div class="row" ng-show="showaddedby">
+        <a ng-if="link.addedby !== 'Anonymous'" href="#!/users/{{link.addedby}}" class="authorname col-sm-8">added by {{link.addedby}} on {{link.createdAt}}</a>
+        <span ng-if="collection.addedby === 'Anonymous'">Anonymous</span>
+        <a href="#!/link/{{link._id}}" ng-if="link.addedby === loguser.username" class="col-sm-1 col-sm-offset-3 authorname glyphicon glyphicon-pencil"></a>
       </div>
-      <p>{{snippet.content}} </p>
+      <p ng-if="link.title">title: {{link.title}} </p>
+      <p>url: {{link.url}} </p>
+      <p ng-if="link.description">description: {{link.description}} </p>
+      <p ng-if="link.tags">tags: {{link.tags}} </p>
     </div>
 
 
 
-  <div class="add-snippet col-sm-8 col-sm-offset-2">
+  <div class="add-link col-sm-8 col-sm-offset-2">
     <form name="linkForm">
       <!-- <input type="url" name='url' placeholder="url" ng-model="newlink.url" ng-minlength="1" required> -->
       <input type="text" name='url' placeholder="url" ng-model="newlink.url" ng-minlength="1" required>
       <br>
       <input type="text" name='title' placeholder="Title" ng-model="newlink.title">
       <input type="text" name='description' placeholder="Description" ng-model="newlink.description">
-      <!-- Collection: 
-      <select ng-model="newlink.taguser">
-        <option ng-repeat="user in users track by $index" value="{{user.name}}">{{user.name}}</option>
-      </select> -->
       <br>
       <input type="text" name='tags' placeholder="tags" ng-model="newlink.tags">
       <br>
@@ -100,7 +106,6 @@
     
 
     
-    <button ng-click="addsnippet(newsnippet)" type="submit" class="btn publish-snippet">Publish</button>
   </div>
 
 

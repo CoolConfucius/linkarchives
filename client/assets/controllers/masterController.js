@@ -217,6 +217,10 @@ app.controller('collectionCtrl', ['$scope', '$rootScope', '$state', '$stateParam
     collectionid: collectionid
   }
   $scope.editcollectionobj = {}; 
+  $scope.showaddedby = true; 
+  $scope.toggleshowaddedby = function(){
+    $scope.showaddedby = !$scope.showaddedby; 
+  }
 
   $scope.loguser = null; 
   usersFactory.getUser(function(data){
@@ -261,16 +265,8 @@ app.controller('collectionCtrl', ['$scope', '$rootScope', '$state', '$stateParam
     
     linksFactory.create(newObj, function(savedLink){
       console.log("collectionsCtrl linksFactory add: ", savedLink);     
-      $scope.collection.links.push(savedLink);
+      $scope.collection._links.push(savedLink);
     })
-    // .then(function(savedLink){ 
-      // var writtenby = user ? user.config.data.username : 'Anonymous'
-      // $scope.collection.links.push({
-      //   content: link.content, 
-      //   writtenby: writtenby,
-      //   _id: savedSnippet.data._id
-      // });
-    // }); 
   };
 
   $scope.iseditcollection = false; 

@@ -89,7 +89,9 @@ function CollectionsController(){
   };
   this.show = function(req, res){
     console.log("Collection show: ", req.params);
-    Collection.findOne({_id: req.params.id}, function(err, collection){
+    Collection.findOne({_id: req.params.id})
+    .populate('_links')
+    .exec(function(err, collection){
       console.log("Found one!: ", collection);
       res.json(collection);
     })

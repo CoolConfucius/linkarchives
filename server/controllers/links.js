@@ -21,6 +21,7 @@ function LinksController(){
     var newlink = new Link({
       collection: link.collection,
       collectionid: link.collectionid,
+      url: link.url,
       title: link.title,
       description: link.description,
       tags: link.tags,
