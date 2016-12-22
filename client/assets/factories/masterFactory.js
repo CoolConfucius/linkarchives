@@ -108,6 +108,7 @@ app.factory('collectionsFactory', ['$http', function($http){
       $http.get(`/collections/${collectionid}`).then(function(returned_data){
         console.log("returned_data: ", returned_data.data);
         if (typeof(callback) == 'function'){
+          collection = returned_data.data;
           callback(returned_data.data);
         }
       });
@@ -122,15 +123,15 @@ app.factory('collectionsFactory', ['$http', function($http){
       });
     };
 
-    this.toggle = function(id, callback){ 
-      $http.put(`/collections/${id}`).then(function(data){
-        console.log(data);
+    this.edit = function(collectionid, editcollectionobj, callback){
+      $http.put(`/collections/${collectionid}`, editcollectionobj).then(function(data){
+        console.log("collectionsFactory show data: ", data);
         if (typeof(callback) == 'function'){
-          callback(data.data);
+          collection = data.data; 
+          callback(collection); 
         }
       })
-    };
-
+    }
 
     this.index = function(callback){
       console.log("collections factory index method");
@@ -139,7 +140,6 @@ app.factory('collectionsFactory', ['$http', function($http){
         collections = returned_data.data;
         callback(collections);
       });
-
     };
 
     this.getCollections = function(callback){

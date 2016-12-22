@@ -24,41 +24,63 @@
   </div>
   <div ng-if="collection.owner === loguser.username" class="row">
     <br>
-    <button ng-click="editstory(collection, user)" class="col-sm-2 col-sm-offset-2 btn">
+    <button ng-click="editcollection(collection, user)" class="col-sm-2 col-sm-offset-2 btn">
       <span class="glyphicon glyphicon-pencil"></span>
       Edit Collection
     </button>
-    <button ng-click="deletestory(collection, user)" ng-if="iseditstory" class="col-sm-2 btn btn">
+    <button ng-click="deletecollection(collection, user)" ng-if="iseditcollection" class="col-sm-2 btn btn">
       <span class="glyphicon glyphicon-trash"></span>
       Delete Collection
     </button>
     <button ng-click="remove()" ng-if="isdeleting" class="col-sm-2 btn">Confirm delete</button>
   </div>
 
-  <div ng-if="iseditstory" class="form col-sm-8 col-sm-offset-2">
+  <div ng-if="iseditcollection" class="form col-sm-8 col-sm-offset-2">
     <br>
     <div class="input-row">
-      <h3>Story Title</h3>
-      <input ng-model="editstoryobj.title" type="text" required="required" class="form-control"/>
+      <h3>Collection Name</h3>
+      <input ng-model="editcollectionobj.name" type="text" required="required" class="form-control"/>
     </div>
 
     <div class="input-row">
-      <h3>Writing Permission</h3>
-      <select name="isclosed" ng-model="editstoryobj.isclosed">
+      <h3>Permissions</h3>
+      <div class="row">
+        <div class="col-md-6">
+          <select name="isclosed" ng-model="editcollectionobj.isclosed">
+            <option name="open" value="open">Open</option>
+            <option name="closed" value="closed">Closed</option>
+          </select>
+          <br>
+          <span>Open: Other users may add links to this collection</span>
+          <br>
+          <span>Closed: Only you may add links to this collection</span>    
+        </div>
+        <div class="col-md-6">
+          <select name="isprivate" ng-model="editcollectionobj.isprivate">
+            <option name="public" value="public">Public</option>
+            <option name="private" value="private">Private</option>
+          </select>
+          <br>
+          <span>Public: Other users may view this collection</span>
+          <br>
+          <span>Private: Only you may view this collection</span>
+        </div>
+      </div>
+      <!-- <select name="isclosed" ng-model="editcollectionobj.isclosed">
         <option name="Open" value="Open">Open</option>
         <option name="Closed" value="Closed">Closed</option>
       </select>
       <br>
       <span>Open: Anyone can read and add onto this collection</span>
       <br>
-      <span>Closed: Anyone can read this collection, but only people you select can add onto it</span>
+      <span>Closed: Anyone can read this collection, but only people you select can add onto it</span> -->
     </div>
 
     <div class="input-row">
       <h3>Description</h3>
-      <textarea ng-model="editstoryobj.description" name="start-snippet" id="" cols="30" rows="10"></textarea>
-      <button ng-click="editstory(collection, user)" class="btn publish-snippet">Cancel Edit</button>
-      <button ng-click="savechanges(editstoryobj)" class="btn publish-snippet">Save Changes</button>
+      <textarea ng-model="editcollectionobj.description" name="start-snippet" id="" cols="30" rows="10"></textarea>
+      <button ng-click="editcollection(collection, user)" class="btn publish-snippet">Cancel Edit</button>
+      <button ng-click="savechanges(editcollectionobj)" class="btn publish-snippet">Save Changes</button>
     </div>
 
 
@@ -66,7 +88,7 @@
 
 
 
-  <div ng-hide="iseditstory" class="collection-box col-sm-8 col-sm-offset-2">
+  <div ng-hide="iseditcollection" class="collection-box col-sm-8 col-sm-offset-2">
     <div class="link">
       <p>{{collection.description}} </p>
     </div>

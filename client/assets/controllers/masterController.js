@@ -292,24 +292,27 @@ app.controller('collectionCtrl', ['$scope', '$rootScope', '$state', '$stateParam
 
   $scope.iseditcollection = false; 
   $scope.editcollection = function(collection, user){
-    if (!user) return;
-    if (collection.startedby !== user.config.data.username) return;    
+    console.log("editcollection: ", $scope.iseditcollection);
+    if (!$scope.loguser) return;
+    console.log($scope.collection, $scope.loguser);
+    if ($scope.collection.owner !== $scope.loguser.username) return;    
     $scope.iseditcollection = !$scope.iseditcollection; 
   }
 
   $scope.savechanges = function(editcollectionobj){    
-    collectionsFactory.edit(collectionid, editcollectionobj).then(function(){
-      $scope.collection.title = editcollectionobj.title;
-      $scope.collection.opening = editcollectionobj.opening;
-      $scope.collection.isclosed = editcollectionobj.isclosed === "Closed";
-      $scope.iseditcollection = false; 
-    });
+    collectionsFactory.edit(collectionid, editcollectionobj, function(){
+        $scope.collection.name = editcollectionobj.name;
+        $scope.collection.description = editcollectionobj.description;
+        $scope.collection.isclosed = editcollectionobj.isclosed === "closed";
+        $scope.collection.isprivate = editcollectionobj.isprivate === "private";
+        $scope.iseditcollection = false; 
+    })
   };
 
   $scope.isdeleting = false; 
   $scope.deletecollection = function(collection, user) {    
     if (!user) return;
-    if (collection.startedby !== user.config.data.username) return;    
+    if (collection.startedby !== loguser.username) return;    
     $scope.isdeleting = !$scope.isdeleting; 
   }
 

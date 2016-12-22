@@ -2,7 +2,7 @@
 {{profileuser._links}}
 <div class="container" id="home">
   <h1>Links added by 
-    <a href="#!/users/{{profileuser.username}}">{{profileuser.username}}</a>
+    <a ng-href="#!/users/{{profileuser.username}}">{{profileuser.username}}</a>
   </h1>
 
   <div ng-repeat='link in profileuser._links'>
@@ -10,7 +10,7 @@
     <div class="panel panel-default link-preview col-sm-8 col-sm-offset-2">
       <div class="panel-body">
         <p>Collection: 
-          <a href="#!/collections/{{link.collectionid}}">
+          <a ng-href="#!/collections/{{link.collectionid}}">
             {{link.collectionname}}
           </a>
           | on: {{link.createdAt | date:'MM/dd/yyyy, h:mma'}} 

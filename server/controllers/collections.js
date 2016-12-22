@@ -49,31 +49,36 @@ function CollectionsController(){
 
   };
 
-  this.toggle = function(req, res){
-    Collection.findOne({_id: req.params.id}, function(err, collection){
-      collection.done = !collection.done; 
-      collection.save(function(err, collection){
-        if(err){
-          console.log('toggle method saving collection err ', err);
-        } else {
-          console.log('successfully toggled an collection! ', collection);
-          res.json(collection);
-        }
-      })    
-    })
-  };
+  // this.toggle = function(req, res){
+  //   Collection.findOne({_id: req.params.id}, function(err, collection){
+  //     collection.done = !collection.done; 
+  //     collection.save(function(err, collection){
+  //       if(err){
+  //         console.log('toggle method saving collection err ', err);
+  //       } else {
+  //         console.log('successfully toggled an collection! ', collection);
+  //         res.json(collection);
+  //       }
+  //     })    
+  //   })
+  // };
 
   this.update = function(req, res){
-    var editcollection = {
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      birthday: req.body.birthday
-    }
-    Collection.findOneAndUpdate({_id: req.params.id}, editcollection, function(err, collection){
-      res.json(collection);
-    })
-
+    console.log("colleciton update params: ", req.params);
+    Collection.findById(req.params.id, function(err, collection){
+      console.log("collection update Found one!: ", collection);
+      if(err) return res.status(400).send(err); 
+      collection.name = req.body.name; 
+      collection.description = req.body.description; 
+      collection.isclosed = req.body.isclosed === "closed"; 
+      collection.isprivate = req.body.isprivate === "private"; 
+      collection.save(function(err, savedCollection){
+        res.json(err || savedCollection);
+      })
+    });
   };
+
+
   this.delete = function(req, res){
     console.log("collections delete req params ", req.params);
     Collection.remove({_id: req.params.id}, function(err){
