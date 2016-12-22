@@ -23,9 +23,9 @@ app.config(function($stateProvider, $urlRouterProvider){
   .state('usercollections', { 
     url: '/usercollections/:username', templateUrl: 'partials/usercollections.html', 
     controller: 'profileCtrl' })
-  // .state('usersnippets', { 
-  //   url: '/usersnippets/:username', templateUrl: 'partials/usersnippets.html', 
-  //   controller: 'profileCtrl' })
+  .state('userlinks', { 
+    url: '/userlinks/:username', templateUrl: 'partials/userlinks.html', 
+    controller: 'profileCtrl' })
   // .state('userfavorites', { 
   //   url: '/userfavorites/:username', templateUrl: 'partials/userfavorites.html', 
   //   controller: 'profileCtrl' })

@@ -1,0 +1,26 @@
+<!-- {{profileuser}} -->
+{{profileuser._links}}
+<div class="container" id="home">
+  <h1>Links added by 
+    <a href="#!/users/{{profileuser.username}}">{{profileuser.username}}</a>
+  </h1>
+
+  <div ng-repeat='link in profileuser._links'>
+    
+    <div class="panel panel-default link-preview col-sm-8 col-sm-offset-2">
+      <div class="panel-body">
+        <p>Collection: 
+          <a href="#!/collections/{{link.collectionid}}">
+            {{link.collectionname}}
+          </a>
+          | on: {{link.createdAt | date:'MM/dd/yyyy, h:mma'}} 
+        </p>
+        <p>{{link.title}}</p>
+        <a ng-href="{{link.url}}" target="_blank">{{link.url}}</a>
+        <p>{{link.description}}</p>
+        <p>{{link.tags}}</p>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -38,8 +38,8 @@ function LinksController(){
         
         collection.recentby = savedLink.addedby; 
         collection.save(function(err, savedStory){
-          if (savedLink.userid) {
-            User.findById(savedLink.userid, function(err, user){
+          if (savedLink.addedby) {
+            User.findOne({username: savedLink.addedby}, function(err, user){
               if (err || !user) return res.status(400).send(err); 
               user._links.push(savedLink._id);
               user.save(function(err, savedUser){

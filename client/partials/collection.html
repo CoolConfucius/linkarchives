@@ -84,7 +84,7 @@
         <a href="#!/link/{{link._id}}" ng-if="link.addedby === loguser.username" class="col-sm-1 col-sm-offset-3 authorname glyphicon glyphicon-pencil"></a>
       </div>
       <p ng-if="link.title">title: {{link.title}} </p>
-      <p>url: {{link.url}} </p>
+      <a ng-href="{{link.url}}" target="_blank">url: {{link.url}} </a>
       <p ng-if="link.description">description: {{link.description}} </p>
       <p ng-if="link.tags">tags: {{link.tags}} </p>
     </div>

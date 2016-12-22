@@ -137,6 +137,7 @@ function UsersController(){
     console.log(req.params);
     User.findOne({username: req.params.username})
     .populate('_collections')
+    .populate('_links')
     .exec(function(err, user){
       res.json(user);
     })
