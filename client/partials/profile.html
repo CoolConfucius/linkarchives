@@ -25,9 +25,9 @@
         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
           <div class="panel-body">
             <ul>
-              <li ng-repeat="story in profileuser.collections | orderBy:-story.startdate">
-                <a href="#/story/{{story._id}}">
-                  {{story.title}}
+              <li ng-repeat="collection in profileuser._collections | orderBy:-collection.createdAt">
+                <a href="#/collection/{{collection._id}}">
+                  {{collection.name}}
                 </a>
               </li>
             </ul>
@@ -65,14 +65,14 @@
       <p>Collections:</p>
     </div>
     <div class="col-sm-6">
-      <p>{{profileuser.collections.length}}</p>
+      <p>{{profileuser._collections.length}}</p>
     </div>
 
     <div class="col-sm-6">
       <p>Links:</p>
     </div>
     <div class="col-sm-6">
-      <p>{{profileuser.links.length}}</p>
+      <p>{{profileuser._links.length}}</p>
     </div>
 
     <div ng-if="profileuser.age" class="col-sm-6">

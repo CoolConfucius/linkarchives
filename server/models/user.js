@@ -18,9 +18,9 @@ var UserSchema = new mongoose.Schema({
   location: { type: String }, 
   email: { type: String }, 
   interests: { type: String }, 
-  collections: [{ type: mongoose.Schema.Types.ObjectId, ref: "Collection" }],
-  links: [{ type: mongoose.Schema.Types.ObjectId, ref: "Link" }],
-  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Collection" }]
+  _collections: [{ type: mongoose.Schema.Types.ObjectId, ref: "Collection" }],
+  _links: [{ type: mongoose.Schema.Types.ObjectId, ref: "Link" }],
+  _favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Collection" }]
   
 }, {timestamps: true})
 

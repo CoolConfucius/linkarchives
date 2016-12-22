@@ -2,6 +2,7 @@ console.log('links controller js');
 
 var mongoose = require('mongoose');
 var Link = mongoose.model('Link');
+var Collection = mongoose.model('Collection');
 var User = mongoose.model('User');
 
 function LinksController(){
@@ -16,76 +17,40 @@ function LinksController(){
 
   this.create = function(req, res){
     console.log("create link: ", req.body);
-    var ownerid, owner; 
-    var link = new Link({
-      title: req.body.title, 
-      description: req.body.description, 
-      user: req.body.user,
-      taguser: req.body.taguser
+    var link = req.body; 
+    var newlink = new Link({
+      collection: link.collection,
+      collectionid: link.collectionid,
+      title: link.title,
+      description: link.description,
+      tags: link.tags,
+      addedby: link.addedby
     });
-
-    User.findOne({name: req.body.user}, function(err, user){
-      if (err || !user) { console.log("user find one err or not found, ", err);}
-      console.log("found user : ", user);
-      if (req.body.user !== req.body.taguser) {
-        User.findOne({name: req.body.taguser}, function(err, taguser){
-          if (err || !taguser) { console.log("taguser find one err or not found, ", err);}
-          console.log("found taguser : ", taguser);
-          user._links.push(link); 
-          taguser._links.push(link); 
-          taguser.save(function(err, taguser){
-            if(err){
-              console.log('err in create method saving taguser', err);
-            } else {
-              console.log('successfully saved a taguser! ', taguser);
-              user.save(function(err, user){
-                if(err){
-                  console.log('err in create method saving user', err);
-                } else {
-                  console.log('successfully saved a user!', user);
-                  link.save(function(err, link){
-                    if(err){
-                      console.log(err);
-                      console.log('create method saving link');
-                    } else {
-                      console.log('successfully added a link!');
-                      console.log(link);
-                      res.json(link);
-                    }
-                  })
-                }
-              })            
-            }
-          })
-        })
-
-
-      } else {
-        User.findOne({name: req.body.user}, function(err, taguser){
-          if (err || !user) { console.log("user find one err or not found, ", err);}
-          console.log("found user : ", user);
-          user._links.push(link);  
-          user.save(function(err, user){
-            if(err){
-              console.log('err in create method saving user', err);
-            } else {
-              console.log('successfully saved a user! ', user);
-              link.save(function(err, link){
-                if(err){
-                  console.log(err);
-                  console.log('create method saving link');
-                } else {
-                  console.log('successfully added a link!');
-                  console.log(link);
-                  res.json(link);
-                }
+    newlink.save(function(err, savedLink) {
+      console.log("newlink save: ,", err, savedLink);
+      if (err) res.send(err);
+      
+      Collection.findById(savedLink.collectionid, function(err, collection){
+        if (err || !collection) return res.status(400).send(err); 
+        collection._links.push(savedLink._id);
+        
+        
+        collection.recentby = savedLink.addedby; 
+        collection.save(function(err, savedStory){
+          if (savedLink.userid) {
+            User.findById(savedLink.userid, function(err, user){
+              if (err || !user) return res.status(400).send(err); 
+              user._links.push(savedLink._id);
+              user.save(function(err, savedUser){
+                res.send(savedLink);
               })
-            }
-          })
+            })
+          } else 
+          res.json(savedLink);
         })
-      }
-    })
+      })
 
+    });
   };
 
   this.toggle = function(req, res){

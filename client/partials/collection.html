@@ -1,0 +1,108 @@
+{{collection}}
+<div class="container" id="collection">
+  <div class="row info">
+    <h1 class="title">{{collection.name}}</h1>
+    <h2 class="title">{{collection.description}}</h2>
+    <span>
+      Owner: 
+      <a ng-if="collection.owner !== 'Anonymous'" href="#!/users/{{collection.owner}}">{{collection.owner}}</a>
+      <span ng-if="collection.owner === 'Anonymous'">Anonymous</span>
+       | created at: {{collection.createdAt}} | updated at: {{collection.updatedAt}}
+    </span>
+    <br>
+    <div class="tag">
+      <span ng-if="!collection.isclosed" class="tag open">Open</span>
+      <span ng-if="collection.isclosed" class="tag closed">Closed</span>
+       & 
+      <span ng-if="!collection.isprivate" class="tag public">Public</span>
+      <span ng-if="collection.isprivate" class="tag private">Private</span>
+    </div>
+    <div ng-if="user && user.config.data.username !== collection.owner && !isfave" ng-click="addfavorite(user.config.data.username, collection._id, collection.owner)" class="btn favorite fa fa-heart"></div>
+    <div ng-if="user && user.config.data.username !== collection.owner && isfave" ng-click="unfave(user.config.data.username, collection._id)" class="btn glyphicon glyphicon-heart-empty">
+    </div>
+  </div>
+  <div ng-if="collection.owner === user.config.data.username" class="row">
+    <br>
+    <button ng-click="editstory(collection, user)" class="col-sm-2 col-sm-offset-2 btn">
+      <span class="glyphicon glyphicon-pencil"></span>
+      Edit Story
+    </button>
+    <button ng-click="deletestory(collection, user)" ng-if="iseditstory" class="col-sm-2 btn btn">
+      <span class="glyphicon glyphicon-trash"></span>
+      Delete Story
+    </button>
+    <button ng-click="remove()" ng-if="isdeleting" class="col-sm-2 btn">Confirm delete</button>
+  </div>
+
+  <div ng-if="iseditstory" class="form col-sm-8 col-sm-offset-2">
+    <br>
+    <div class="input-row">
+      <h3>Story Title</h3>
+      <input ng-model="editstoryobj.title" type="text" required="required" class="form-control"/>
+    </div>
+
+    <div class="input-row">
+      <h3>Writing Permission</h3>
+      <select name="isclosed" ng-model="editstoryobj.isclosed">
+        <option name="Open" value="Open">Open</option>
+        <option name="Closed" value="Closed">Closed</option>
+      </select>
+      <br>
+      <span>Open: Anyone can read and add onto this collection</span>
+      <br>
+      <span>Closed: Anyone can read this collection, but only people you select can add onto it</span>
+    </div>
+
+    <div class="input-row">
+      <h3>Description</h3>
+      <textarea ng-model="editstoryobj.description" name="start-snippet" id="" cols="30" rows="10"></textarea>
+      <button ng-click="editstory(collection, user)" class="btn publish-snippet">Cancel Edit</button>
+      <button ng-click="savechanges(editstoryobj)" class="btn publish-snippet">Save Changes</button>
+    </div>
+
+
+  </div>
+
+
+
+  <div ng-hide="iseditstory" class="collection-box col-sm-8 col-sm-offset-2">
+    <div class="snippet">
+      <p>{{collection.description}} </p>
+    </div>
+    <br>
+    <div ng-repeat='snippet in collection.snippets track by $index' class="snippet">
+      <div class="row">
+        <a ng-if="snippet.writtenby !== 'Anonymous'" href="#!/users/{{snippet.writtenby}}" class="authorname col-sm-8">{{snippet.writtenby}}</a>
+        <span ng-if="collection.writtenby === 'Anonymous'">Anonymous</span>
+        <a href="#!/snippet/{{snippet._id}}" ng-if="snippet.writtenby === user.config.data.username" class="col-sm-1 col-sm-offset-3 authorname glyphicon glyphicon-pencil"></a>
+      </div>
+      <p>{{snippet.content}} </p>
+    </div>
+
+
+
+  <div class="add-snippet col-sm-8 col-sm-offset-2">
+    <form name="linkForm">
+      <!-- <input type="url" name='url' placeholder="url" ng-model="newlink.url" ng-minlength="1" required> -->
+      <input type="text" name='url' placeholder="url" ng-model="newlink.url" ng-minlength="1" required>
+      <br>
+      <input type="text" name='title' placeholder="Title" ng-model="newlink.title">
+      <input type="text" name='description' placeholder="Description" ng-model="newlink.description">
+      <!-- Collection: 
+      <select ng-model="newlink.taguser">
+        <option ng-repeat="user in users track by $index" value="{{user.name}}">{{user.name}}</option>
+      </select> -->
+      <br>
+      <input type="text" name='tags' placeholder="tags" ng-model="newlink.tags">
+      <br>
+      <button class="btn btn-primary" ng-click="addlink()" ng-disabled="linkForm.url.$invalid">Add Link</button>
+    </form>
+    
+
+    
+    <button ng-click="addsnippet(newsnippet)" type="submit" class="btn publish-snippet">Publish</button>
+  </div>
+
+
+
+</div>

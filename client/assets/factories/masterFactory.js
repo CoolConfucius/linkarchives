@@ -98,13 +98,23 @@ app.factory('usersFactory', ['$http', '$localStorage', '$rootScope', function($h
   return new UsersFactory();
 }])
 
-app.factory('itemsFactory', ['$http', function($http){
-  var items = []; 
-  var item = {}; 
-  function ItemsFactory(){
-    var _this = this;
-    this.create = function(newitem,callback){
-      $http.post('/items', newitem).then(function(returned_data){
+app.factory('collectionsFactory', ['$http', function($http){
+  var collections = []; 
+  var collection = {}; 
+
+  function CollectionsFactory(){
+
+    this.show = function(collectionid, callback){
+      $http.get(`/collections/${collectionid}`).then(function(returned_data){
+        console.log("returned_data: ", returned_data.data);
+        if (typeof(callback) == 'function'){
+          callback(returned_data.data);
+        }
+      });
+    }
+
+    this.create = function(newcollection,callback){
+      $http.post('/collections', newcollection).then(function(returned_data){
         console.log("returned_data: ", returned_data.data);
         if (typeof(callback) == 'function'){
           callback(returned_data.data);
@@ -113,7 +123,7 @@ app.factory('itemsFactory', ['$http', function($http){
     };
 
     this.toggle = function(id, callback){ 
-      $http.put(`/items/${id}`).then(function(data){
+      $http.put(`/collections/${id}`).then(function(data){
         console.log(data);
         if (typeof(callback) == 'function'){
           callback(data.data);
@@ -123,24 +133,70 @@ app.factory('itemsFactory', ['$http', function($http){
 
 
     this.index = function(callback){
-      console.log("items factory index method");
-      $http.get('/items').then(function(returned_data){
-        console.log("items factory get items: ", returned_data.data);
-        items = returned_data.data;
-        callback(items);
+      console.log("collections factory index method");
+      $http.get('/collections').then(function(returned_data){
+        console.log("collections factory get collections: ", returned_data.data);
+        collections = returned_data.data;
+        callback(collections);
       });
 
     };
 
-    this.getItems = function(callback){
-      callback(items);
+    this.getCollections = function(callback){
+      callback(collections);
     };
-    this.getItem = function(callback){
-        callback(item);
+    this.getCollection = function(callback){
+      callback(collection);
     };
   }
   
-  return new ItemsFactory();
+  return new CollectionsFactory();
 }])
 
 
+
+
+app.factory('linksFactory', ['$http', function($http){
+  var links = []; 
+  var link = {}; 
+  function LinksFactory(){
+
+    this.create = function(newlink, callback){
+      $http.post('/links', newlink).then(function(returned_data){
+        console.log("returned_data: ", returned_data.data);
+        if (typeof(callback) == 'function'){
+          callback(returned_data.data);
+        }
+      });
+    };
+
+    this.toggle = function(id, callback){ 
+      $http.put(`/links/${id}`).then(function(data){
+        console.log(data);
+        if (typeof(callback) == 'function'){
+          callback(data.data);
+        }
+      })
+    };
+
+
+    this.index = function(callback){
+      console.log("links factory index method");
+      $http.get('/links').then(function(returned_data){
+        console.log("links factory get links: ", returned_data.data);
+        links = returned_data.data;
+        callback(links);
+      });
+
+    };
+
+    this.getLinks = function(callback){
+      callback(links);
+    };
+    this.getLink = function(callback){
+      callback(link);
+    };
+  }
+  
+  return new LinksFactory();
+}])

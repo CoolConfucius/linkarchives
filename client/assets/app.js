@@ -11,9 +11,9 @@ app.config(function($stateProvider, $urlRouterProvider){
   .state('addlink', { 
     url: '/addlink', templateUrl: 'partials/addlink.html', 
     controller: 'navCtrl' })
-  // .state('story', { 
-  //   url: '/story/:storyid', templateUrl: 'partials/story.html', 
-  //   controller: 'storyCtrl' })
+  .state('collection', { 
+    url: '/collections/:collectionid', templateUrl: 'partials/collection.html', 
+    controller: 'collectionCtrl' })
   // .state('snippet', { 
   //   url: '/snippet/:snippetid', templateUrl: 'partials/snippet.html', 
   //   controller: 'snippetCtrl' })

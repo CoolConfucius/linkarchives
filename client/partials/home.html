@@ -31,8 +31,33 @@
     <hr>
     <div class="btn btn-primary" ng-click="togglecollectionform()">Add Collection</div>
     <form name="collectionForm" ng-show="collectionform">
-      <input type="text" name='name' placeholder="Name" ng-model="newcollection.title" ng-minlength="1" required>
+      <input type="text" name='name' placeholder="Name" ng-model="newcollection.name" ng-minlength="1" required>
       <input type="text" name='description' placeholder="Description" ng-model="newcollection.description" ng-minlength="1">
+      <p>Collection Permissions</p>
+      <div class="row">
+        <div class="col-md-6">
+          <select name="isclosed" ng-model="newcollection.isclosed">
+            <option name="open" value="open">Open</option>
+            <option name="closed" value="closed">Closed</option>
+          </select>
+          <br>
+          <span>Open: Other users may add links to this collection</span>
+          <br>
+          <span>Closed: Only you may add links to this collection</span>    
+        </div>
+        <div class="col-md-6">
+          <select name="isprivate" ng-model="newcollection.isprivate">
+            <option name="public" value="public">Public</option>
+            <option name="private" value="private">Private</option>
+          </select>
+          <br>
+          <span>Public: Other users may view this collection</span>
+          <br>
+          <span>Private: Only you may view this collection</span>
+        </div>
+      </div>
+      
+      <br>
       <button class="btn btn-primary" ng-click="addcollection()" ng-disabled="collectionForm.name.$invalid">Enter</button>
     </form>
     <hr>

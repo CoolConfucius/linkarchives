@@ -4,14 +4,16 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var CollectionSchema = new mongoose.Schema({
-  title: { type: String }, 
+  name: { type: String }, 
   description: { type: String }, 
   owner: { type: String }, 
-  ownerid: { type: String }, 
-  isprivate: { type: Boolean }, 
+  recentby: { type: String }, 
+  // ownerid: { type: String }, 
+  isprivate: { type: Boolean, default: false }, 
+  isclosed: { type: Boolean, default: false }, 
   views: { type: Number, default: 1 }, 
   likes: { type: Number, default: 1 }, 
-  links: [{ type: mongoose.Schema.Types.ObjectId, ref: "Link" }]
+  _links: [{ type: mongoose.Schema.Types.ObjectId, ref: "Link" }]
 }, {timestamps: true})
 
 var Collection = mongoose.model('Collection', CollectionSchema);

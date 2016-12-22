@@ -11,7 +11,7 @@ var LinkSchema = new mongoose.Schema({
   collectionname: { type: String }, 
   collectionid: { type: String }, 
   addedby: { type: String }, 
-  addedbyid: { type: String }, 
+  // addedbyid: { type: String }, 
   isimage: { type: Boolean, default: false }, 
   clicks: { type: Number, default: 1 }, 
   views: { type: Number, default: 1 }, 

@@ -66,14 +66,21 @@ app.controller('registerCtrl', ['$scope', '$state', '$localStorage', 'usersFacto
 
 }])
 
-app.controller('homeCtrl', ['$scope', '$location', 'usersFactory', 'itemsFactory', function($scope, $location, usersFactory, itemsFactory){
+app.controller('homeCtrl', ['$scope', '$location', 'usersFactory', 'collectionsFactory', function($scope, $location, usersFactory, collectionsFactory){
   console.log("homeCtrl");
   $scope.collectionform = true; 
-  
+  $scope.newcollection = {
+    isclosed: "open",
+    isprivate: "public"
+  }
   $scope.loguser = null; 
   usersFactory.getUser(function(data){
-    $scope.loguser = data; 
     console.log("navCtrl usersFactory getUser, ", data);
+    if (data) {
+      $scope.loguser = data; 
+      $scope.newcollection.owner = data.username;
+      $scope.username = data.username;
+    };
   })
   $scope.users = [];
   $scope.items = [];
@@ -83,14 +90,14 @@ app.controller('homeCtrl', ['$scope', '$location', 'usersFactory', 'itemsFactory
     $scope.collectionform = !$scope.collectionform; 
   }
 
-  // function gotoRegister(){
-  //   if (!$scope.loguser) {
-  //     alert("Register to add a collection!");
-  //     $location.url('/register');
-  //   };
-  // }
 
   $scope.addcollection = function(){
+    console.log("homeCtrl addcollection: ", $scope.newcollection);
+    if ($scope.newcollection.name.length === 0) return swal("Give your collection a name!");
+    collectionsFactory.create($scope.newcollection, function(data){
+      console.log("homeCtrl collectionsFactory create: ", data);
+        $location.url(`collections/${data._id}`);
+    })
     
     // console.log($scope.newitem.taguser);
     // if (!$scope.newitem.taguser) $scope.newitem.taguser = $scope.loggedinuser.name;
@@ -145,7 +152,7 @@ app.controller('homeCtrl', ['$scope', '$location', 'usersFactory', 'itemsFactory
 
 }])
 
-app.controller('profileCtrl', ['$scope', '$state', 'usersFactory', 'itemsFactory', function($scope, $state, usersFactory, itemsFactory){
+app.controller('profileCtrl', ['$scope', '$state', 'usersFactory', 'collectionsFactory', function($scope, $state, usersFactory, collectionsFactory){
   console.log("profileCtrl");
   console.log("params", $state.params);
   $scope.sameuser = false; 
@@ -200,6 +207,150 @@ app.controller('profileCtrl', ['$scope', '$state', 'usersFactory', 'itemsFactory
   }
 
 }])
+
+
+
+app.controller('collectionCtrl', ['$scope', '$rootScope', '$state', '$stateParams', '$localStorage', 'collectionsFactory', 'linksFactory', 'usersFactory', function($scope, $rootScope, $state, $stateParams, $localStorage, collectionsFactory, linksFactory, usersFactory) {
+  
+  var collectionid = $state.params.collectionid;
+  $scope.newlink = {
+    collectionid: collectionid
+  }
+  $scope.editcollectionobj = {}; 
+
+  $scope.loguser = null; 
+  usersFactory.getUser(function(data){
+    console.log("collectionsCtrl usersFactory getUser, ", data);
+    $scope.loguser = data; 
+    $scope.newlink.addedby = data.username; 
+  }) 
+
+  
+
+
+  collectionsFactory.show(collectionid, function(res){
+    console.log("collectionsCtrl collectionsFactory ", res);
+    $scope.collection = res; 
+    $scope.newlink.collection = res.name; 
+    $scope.editcollectionobj = {
+      name: res.name, 
+      isclosed: res.isclosed ? "closed" : "open", 
+      isprivate: res.isprivate ? "private" : "public", 
+      description: res.description
+    };
+  })
+
+  $scope.addlink = function(){    
+    var link = $scope.newlink; 
+    console.log("collectionsCtrl addlink: ", link, $scope.loguser);
+
+
+    var newObj; 
+    var addedby = 'Anonymous';
+    if ($scope.loguser) addedby = $scope.loguser.username;    
+    newObj = {
+      collection: $scope.collection.name, 
+      collectionid: collectionid,
+      url: link.url, 
+      title: link.title, 
+      tags: link.tags, 
+      description: link.description, 
+      addedby: addedby
+    }    
+    console.log("newObj: ", newObj);
+    
+    linksFactory.create(newObj, function(savedLink){
+      console.log("collectionsCtrl linksFactory add: ", savedLink);     
+      $scope.collection.links.push(savedLink);
+    })
+    // .then(function(savedLink){ 
+      // var writtenby = user ? user.config.data.username : 'Anonymous'
+      // $scope.collection.links.push({
+      //   content: link.content, 
+      //   writtenby: writtenby,
+      //   _id: savedSnippet.data._id
+      // });
+    // }); 
+  };
+
+  $scope.iseditcollection = false; 
+  $scope.editcollection = function(collection, user){
+    if (!user) return;
+    if (collection.startedby !== user.config.data.username) return;    
+    $scope.iseditcollection = !$scope.iseditcollection; 
+  }
+
+  $scope.savechanges = function(editcollectionobj){    
+    collectionsFactory.edit(collectionid, editcollectionobj).then(function(){
+      $scope.collection.title = editcollectionobj.title;
+      $scope.collection.opening = editcollectionobj.opening;
+      $scope.collection.isclosed = editcollectionobj.isclosed === "Closed";
+      $scope.iseditcollection = false; 
+    });
+  };
+
+  $scope.isdeleting = false; 
+  $scope.deletecollection = function(collection, user) {    
+    if (!user) return;
+    if (collection.startedby !== user.config.data.username) return;    
+    $scope.isdeleting = !$scope.isdeleting; 
+  }
+
+  $scope.remove = function(){
+    collectionsFactory.remove(collectionid).then(function(){
+      $state.go('home');
+    })
+  }
+
+
+  // $scope.addfavorite = function(username, collectionid, collectionstarter){
+  //   if (username === collectionstarter) return swal("Try favorting other users stories instead of your own.");
+  //   collectionsFactory.favorite(username, collectionid).then(function(){
+  //     swal("Added to favorites!")
+  //     $scope.isfave = true; 
+  //   })
+  // }
+
+  // $scope.unfave = function(username, collectionid){
+  //   collectionsFactory.unfave(username, collectionid).then(function(){
+  //     swal("Removed from favorites!")
+  //     $scope.isfave = false; 
+  //   })
+  // }
+
+  
+}]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

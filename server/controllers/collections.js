@@ -16,75 +16,36 @@ function CollectionsController(){
 
   this.create = function(req, res){
     console.log("create collection: ", req.body);
-    var ownerid, owner; 
-    var collection = new Collection({
-      title: req.body.title, 
-      description: req.body.description, 
-      user: req.body.user,
-      taguser: req.body.taguser
+    var collection = req.body; 
+    var owner; 
+    if (collection.owner) {
+      owner = req.body.owner; 
+    } else {
+      owner = "Anonymous"; 
+    }
+
+    var isclosed = (collection.isclosed === 'closed') ? true : false; 
+    var isprivate = (collection.isprivate === 'private') ? true : false; 
+
+    var newcollection = new Collection({
+      name: collection.name, 
+      description: collection.description, 
+      isclosed: isclosed, 
+      isprivate: isprivate, 
+      owner: owner
     });
-
-    User.findOne({name: req.body.user}, function(err, user){
-      if (err || !user) { console.log("user find one err or not found, ", err);}
-      console.log("found user : ", user);
-      if (req.body.user !== req.body.taguser) {
-        User.findOne({name: req.body.taguser}, function(err, taguser){
-          if (err || !taguser) { console.log("taguser find one err or not found, ", err);}
-          console.log("found taguser : ", taguser);
-          user._collections.push(collection); 
-          taguser._collections.push(collection); 
-          taguser.save(function(err, taguser){
-            if(err){
-              console.log('err in create method saving taguser', err);
-            } else {
-              console.log('successfully saved a taguser! ', taguser);
-              user.save(function(err, user){
-                if(err){
-                  console.log('err in create method saving user', err);
-                } else {
-                  console.log('successfully saved a user!', user);
-                  collection.save(function(err, collection){
-                    if(err){
-                      console.log(err);
-                      console.log('create method saving collection');
-                    } else {
-                      console.log('successfully added a collection!');
-                      console.log(collection);
-                      res.json(collection);
-                    }
-                  })
-                }
-              })            
-            }
+    newcollection.save(function(err, savedCollection) {
+      if (err) return cb(err);
+      if (savedCollection.owner) {
+        User.findOne({username: savedCollection.owner}, function(err, user){
+          if (err || !user) res.send('user not found', null);
+          user._collections.push(savedCollection._id);
+          user.save(function(err, savedUser){
+            res.json(savedCollection);  
           })
         })
-
-
-      } else {
-        User.findOne({name: req.body.user}, function(err, taguser){
-          if (err || !user) { console.log("user find one err or not found, ", err);}
-          console.log("found user : ", user);
-          user._collections.push(collection);  
-          user.save(function(err, user){
-            if(err){
-              console.log('err in create method saving user', err);
-            } else {
-              console.log('successfully saved a user! ', user);
-              collection.save(function(err, collection){
-                if(err){
-                  console.log(err);
-                  console.log('create method saving collection');
-                } else {
-                  console.log('successfully added a collection!');
-                  console.log(collection);
-                  res.json(collection);
-                }
-              })
-            }
-          })
-        })
-      }
-    })
+      } else res.json(savedCollection);
+    });
 
   };
 
@@ -127,8 +88,9 @@ function CollectionsController(){
 
   };
   this.show = function(req, res){
-    console.log(req.params);
+    console.log("Collection show: ", req.params);
     Collection.findOne({_id: req.params.id}, function(err, collection){
+      console.log("Found one!: ", collection);
       res.json(collection);
     })
   };
