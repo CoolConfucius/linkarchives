@@ -24,11 +24,11 @@
   </div>
   <div ng-if="collection.owner === loguser.username" class="row">
     <br>
-    <button ng-click="editcollection(collection, user)" class="col-sm-2 col-sm-offset-2 btn">
+    <button ng-click="editcollection(collection, user)" class="col-sm-2 col-sm-offset-2 btn btn-warning">
       <span class="glyphicon glyphicon-pencil"></span>
       Edit Collection
     </button>
-    <button ng-click="deletecollection(collection, user)" ng-if="iseditcollection" class="col-sm-2 btn btn">
+    <button ng-click="deletecollection(collection, user)" ng-if="iseditcollection" class="col-sm-2 btn btn-danger">
       <span class="glyphicon glyphicon-trash"></span>
       Delete Collection
     </button>
