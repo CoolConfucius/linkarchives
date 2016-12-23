@@ -13,6 +13,8 @@ An app called Delicious solves this problem. Users can make an account and add b
 Despite this flaw, I used Delicious because no other app has accomplished this. Until Delicious shut down and its users lost all the bookmarks they saved. It's as if a library has been burnt down. 
 
 Enter Link Archives. 
-Like Delicious, users may create an account and add links. Different from Delicious, Link Archives have Link Collections. 
+Like Delicious, users may create an account and add links. Different from Delicious, Link Archives have Link Collections. In addition to their tags, a link can belong to a Collection. Users may give their Collections: videos, images, or articles. Because of Collections, finding links is easier in Link Archives than in Delicious. 
 
+In addition, users may view public Collections made by other users and add links to the Collections that are open to public. They may even add other user Collections to their favorites. 
 
+Thank you! 
