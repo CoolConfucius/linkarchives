@@ -18,3 +18,8 @@ Like Delicious, users may create an account and add links. Different from Delici
 In addition, users may view public Collections made by other users and add links to the Collections that are open to public. They may even add other user Collections to their favorites. 
 
 Thank you! 
+
+
+
+Heroku deployed at: 
+https://linkarchives.herokuapp.com/
