@@ -5,7 +5,6 @@ var bcrypt = require('bcrypt-node');
 var jwt = require('jwt-simple');
 
 var User = mongoose.model('User');
-// var Item = mongoose.model('Item');
 
 function UsersController(){
   this.index = function(req, res){
