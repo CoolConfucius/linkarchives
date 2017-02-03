@@ -222,7 +222,7 @@ app.controller('collectionCtrl', ['$scope', '$rootScope', '$state', '$stateParam
 
   $scope.loguser = null; 
   usersFactory.getUser(function(data){
-    console.log("collectionsCtrl usersFactory getUser, ", data);
+    console.log("collectionCtrl usersFactory getUser, ", data);
     $scope.loguser = data; 
     $scope.newlink.addedby = data.username; 
   }) 
@@ -231,7 +231,7 @@ app.controller('collectionCtrl', ['$scope', '$rootScope', '$state', '$stateParam
 
 
   collectionsFactory.show(collectionid, function(res){
-    console.log("collectionsCtrl collectionsFactory ", res);
+    console.log("collectionCtrl collectionsFactory ", res);
     $scope.collection = res; 
     $scope.newlink.collection = res.name; 
     $scope.editcollectionobj = {
@@ -244,7 +244,7 @@ app.controller('collectionCtrl', ['$scope', '$rootScope', '$state', '$stateParam
 
   $scope.addlink = function(){    
     var link = $scope.newlink; 
-    console.log("collectionsCtrl addlink: ", link, $scope.loguser);
+    console.log("collectionCtrl addlink: ", link, $scope.loguser);
 
 
     var newObj; 
@@ -262,7 +262,7 @@ app.controller('collectionCtrl', ['$scope', '$rootScope', '$state', '$stateParam
     console.log("newObj: ", newObj);
     
     linksFactory.create(newObj, function(savedLink){
-      console.log("collectionsCtrl linksFactory add: ", savedLink);     
+      console.log("collectionCtrl linksFactory add: ", savedLink);     
       $scope.collection._links.push(savedLink);
     })
   };

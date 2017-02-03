@@ -1,3 +1,5 @@
+console.log("homeCtrl.js");
+
 var app = angular.module('app');
 
 app.controller('homeCtrl', ['$scope', '$location', 'usersFactory', 'collectionsFactory', 'linksFactory', function($scope, $location, usersFactory, collectionsFactory, linksFactory){

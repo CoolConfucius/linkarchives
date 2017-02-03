@@ -1,3 +1,5 @@
+console.log("registerCtrl.js");
+
 var app = angular.module('app');
 
 app.controller('registerCtrl', ['$scope', '$state', '$localStorage', 'usersFactory', function($scope, $state, $localStorage, usersFactory){

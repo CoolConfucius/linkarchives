@@ -1,3 +1,5 @@
+console.log("navCtrl.js");
+
 var app = angular.module('app');
 
 app.controller('navCtrl', ['$scope', '$state', 'usersFactory', function($scope, $state, usersFactory){
