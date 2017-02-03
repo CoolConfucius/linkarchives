@@ -21,6 +21,8 @@ app.controller('navCtrl', ['$scope', '$state', 'usersFactory', function($scope, 
         swal(data);  
       } else {
         $scope.loguser = data; 
+        console.log("$scope.loguser ", $scope.loguser);        
+
         $state.go('home');
       }
     })

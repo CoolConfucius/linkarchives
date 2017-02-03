@@ -208,7 +208,7 @@ app.controller('profileCtrl', ['$scope', '$state', 'usersFactory', 'collectionsF
 
 
 
-app.controller('collectionCtrl', ['$scope', '$rootScope', '$state', '$stateParams', '$localStorage', 'collectionsFactory', 'linksFactory', 'usersFactory', function($scope, $rootScope, $state, $stateParams, $localStorage, collectionsFactory, linksFactory, usersFactory) {
+app.controller('collectionCtrl', ['$scope', '$state', '$stateParams', '$localStorage', 'collectionsFactory', 'linksFactory', 'usersFactory', function($scope, $state, $stateParams, $localStorage, collectionsFactory, linksFactory, usersFactory) {
   
   var collectionid = $state.params.collectionid;
   $scope.newlink = {

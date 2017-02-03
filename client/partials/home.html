@@ -1,6 +1,6 @@
 <!-- {{loguser}} -->
 <div class="container" id="home">
-  <div ng-show="loguser">
+  <div ng-show="loguser || rootuser">
      <a class="btn btn-sm btn-primary" ng-href="#!/usercollections/{{username}}">Your Collections</a> | <a class="btn btn-sm btn-primary" ng-href="#!/userlinks/{{username}}">Your Links</a> | <a class="btn btn-sm btn-primary" ng-href="#!/users/{{username}}">Profile</a>
     <br><br>
     <form name="linkForm">
@@ -56,7 +56,7 @@
     <hr>
   </div>
   
-  <p>Featured Links</p>
+  <!-- <p>Featured Links</p> -->
 
   
 

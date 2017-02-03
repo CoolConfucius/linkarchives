@@ -14,9 +14,6 @@ app.config(function($stateProvider, $urlRouterProvider){
   .state('collection', { 
     url: '/collections/:collectionid', templateUrl: 'partials/collection.html', 
     controller: 'collectionCtrl' })
-  // .state('snippet', { 
-  //   url: '/snippet/:snippetid', templateUrl: 'partials/snippet.html', 
-  //   controller: 'snippetCtrl' })
   .state('profile', { 
     url: '/users/:username', templateUrl: 'partials/profile.html', 
     controller: 'profileCtrl' })
