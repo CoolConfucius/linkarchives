@@ -43,16 +43,8 @@ app.config(function($stateProvider, $urlRouterProvider){
   // })
 
 
-  // .state('/customers', {
-  //   templateUrl: 'partials/customers.html'
-  // })
-  // .state('/products', {
-  //   templateUrl: 'partials/products.html'
-  // })
-  // .state('/orders', {
-  //   templateUrl: 'partials/orders.html'
-  // })
-})
+  $urlRouterProvider.otherwise('/');
+});
 
 app.run(function($rootScope, usersFactory){
   console.log("App.run! ");
